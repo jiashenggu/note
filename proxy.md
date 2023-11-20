@@ -21,7 +21,7 @@ proxy_servers:
 
 git联网
 ```
-git config --global http.proxy 你的网络代理地址 作者：彭氏小笼包 https://www.bilibili.com/read/cv23352904/ 出处：bilibili
+git config --global http.proxy 你的网络代理地址
 ```
 
 还有就是下载各种包需要用到的pip install也需要联网，他们在文件launch.py里：
