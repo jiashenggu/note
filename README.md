@@ -11,3 +11,7 @@ extra-index-url =
         https://pypi.ngc.nvidia.com
 trusted-host = mirrors.aliyun.com
 ```
+
+```
+export TMPDIR=/bigass/space
+```
