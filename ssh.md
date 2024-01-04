@@ -7,12 +7,13 @@ set -e
 set -x
 
 username=${1:-""}
-ssh_key_pub=${2:-""}
+uid=${2:-""}
+ssh_key_pub=${3:-""}
 if [ "${username}" == "" ]; then
   echo "need username"
   exit 1
 fi
-sudo adduser "${username}" --disabled-password
+adduser "${username}" --uid ${uid}  --disabled-password
 mkdir -p /home/${username}/.ssh
 echo "${ssh_key_pub}" >> /home/${username}/.ssh/authorized_keys
 chown -R ${username}:${username} /home/${username}
