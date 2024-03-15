@@ -21,3 +21,10 @@ snapshot_download(repo_id=args.model_name,
                   local_dir_use_symlinks=False)
 
 ```
+### Command:
+```
+pip install -U huggingface_hub
+pip install -U hf-transfer
+export HF_HUB_ENABLE_HF_TRANSFER=1
+huggingface-cli download --resume-download playgroundai/playground-v2.5-1024px-aesthetic --local-dir 要保存的路径 --local-dir-use-symlinks False
+```
