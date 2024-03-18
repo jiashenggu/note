@@ -18,8 +18,9 @@ pipeline = StableDiffusionXLPipeline.from_single_file()
 pipeline.save_pretrained(...)
 ```
 ```
+import torch
 from diffusers import StableDiffusionXLPipeline
 
-pipe = StableDiffusionXLPipeline.from_single_file("<your-safetensors-file>", torch_dtype=torch.float16)
-pipe.save_pretrained("<your-diffusers-folder>", variant="fp16")
+pipeline = StableDiffusionXLPipeline.from_single_file("<your-safetensors-file>", torch_dtype=torch.float16)
+pipeline.save_pretrained("<your-diffusers-folder>", variant="fp16")
 ```
