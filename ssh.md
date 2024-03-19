@@ -25,23 +25,32 @@ usermod -aG sudo ${username}
 ```
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/ML-A100/home/gujiasheng/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$('/ML-A100/team/mm/gujiasheng/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/ML-A100/home/gujiasheng/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/ML-A100/home/gujiasheng/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "/ML-A100/team/mm/gujiasheng/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/ML-A100/team/mm/gujiasheng/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/ML-A100/home/gujiasheng/miniconda3/bin:$PATH"
+        export PATH="/ML-A100/team/mm/gujiasheng/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-alias proxy_on="export http_proxy=x;export https_proxy=x"
+alias proxy_on="export http_proxy=100.66.28.72:3128;export https_proxy=100.66.28.72:3128"
 alias proxy_off="unset http_proxy https_proxy"
-alias gjs="cd /ML-A100/home/gujiasheng"
-# export CUDA_HOME="/usr/local/cuda-12.1"
-export HF_HOME=/ML-A100/home/gujiasheng/cache
+alias gjs="cd /ML-A100/team/mm/gujiasheng"
+alias ns="watch -n 1 nvidia-smi"
+alias ll="ls -l"
+export HF_HOME=/ML-A100/team/mm/gujiasheng/.cache/huggingface
+export TMPDIR=/ML-A100/team/mm/gujiasheng/tmp
+export PIP_CACHE_DIR=/ML-A100/team/mm/gujiasheng/.cache/pip
+
+[ -r ~/.volc/.profile ] && source ~/.volc/.profile #[volc installer]
+
+ export PATH="/usr/local/cuda-11.8/bin:$PATH"
+ # export LD_LIBRARY_PATH="/usr/local/cuda-11.8/lib64:$LD_LIBRARY_PATH"
+
 ```
 
 use an already existed directory as home
