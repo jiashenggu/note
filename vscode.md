@@ -1,9 +1,20 @@
 debug: 
+```
+{
+    "justMyCode": false, will not skip code in packages
+}
+```
 
-
-"justMyCode": false, will not skip code in packages
-
-"notebook.output.wordWrap": true: let text automatically change lines
-
+text automatically change lines
+```
+{
+    "notebook.output.wordWrap": true:
+}
+```
 workspace settings
-workbench.editor.wrapTabs
+
+```
+{
+    "workbench.editor.wrapTabs": true
+}
+```
