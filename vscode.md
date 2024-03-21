@@ -25,3 +25,7 @@ vscode在最上面显示当前类：
 在设置搜索框中，输入“Breadcrumbs”进行搜索。  
 确保勾选了“Editor › Breadcrumbs: Enabled”选项，以启用 Breadcrumbs 功能。  
 你还可以调整其他相关设置，如“Editor › Breadcrumbs: FilePath”和“Editor › Breadcrumbs: SymbolPath”来控制显示的信息详细程度。  
+
+
+import readline
+input() 可以用方向键
