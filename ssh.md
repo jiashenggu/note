@@ -42,14 +42,20 @@ alias proxy_off="unset http_proxy https_proxy"
 alias gjs="cd /ML-A100/team/mm/gujiasheng"
 alias ns="watch -n 1 nvidia-smi"
 alias ll="ls -l"
+alias sb="source ~/.bashrc"
 export HF_HOME=/ML-A100/team/mm/gujiasheng/.cache/huggingface
 export TMPDIR=/ML-A100/team/mm/gujiasheng/tmp
 export PIP_CACHE_DIR=/ML-A100/team/mm/gujiasheng/.cache/pip
+export HOME=/ML-A100/team/mm/gujiasheng
 
 [ -r ~/.volc/.profile ] && source ~/.volc/.profile #[volc installer]
 
  export PATH="/usr/local/cuda-11.8/bin:$PATH"
  # export LD_LIBRARY_PATH="/usr/local/cuda-11.8/lib64:$LD_LIBRARY_PATH"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 ```
 
