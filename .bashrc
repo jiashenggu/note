@@ -18,6 +18,7 @@ alias gjs="cd /ML-A100/team/mm/gujiasheng"
 alias ns="watch -n 1 nvidia-smi"
 alias ll="ls -l"
 alias sb="source ~/.bashrc"
+alias gpu="echo $CUDA_VISIBLE_DEVICES"
 function 2gpu() {
     export CUDA_VISIBLE_DEVICES="$1"
 }
