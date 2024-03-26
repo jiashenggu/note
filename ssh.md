@@ -34,6 +34,10 @@ sudo chown -R <newowner>:<newgroup> <directory>
 ```
 
 ```
+userdel $USER_NAME       #只是删除了这个用户，没删home目录
+```
+
+```
 ssh -v -T git@github.com
 eval "$(ssh-agent -s)"
 ssh-add {$HOME}/.ssh/my_id_rsa
