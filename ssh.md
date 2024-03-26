@@ -32,3 +32,18 @@ vi /etc/group  # add user to group
 sudo visudo  # add user as sudoers
 sudo chown -R <newowner>:<newgroup> <directory>
 ```
+
+```
+ssh -v -T git@github.com
+eval "$(ssh-agent -s)"
+ssh-add {$HOME}/.ssh/my_id_rsa
+
+
+~/.ssh/config:
+
+Host github.com
+  HostName github.com
+  User git
+  IdentityFile {$HOME}/.ssh/my_id_rsa
+  IdentitiesOnly yes
+```
