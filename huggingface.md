@@ -4,7 +4,7 @@ export HF_ENDPOINT=https://hf-mirror.com
 ```
 export HF_HOME=${HOME}/cache
 ```
-```
+```python
 # https://huggingface.co/docs/huggingface_hub/package_reference/file_download
 from huggingface_hub import snapshot_download
 import argparse
@@ -20,11 +20,24 @@ snapshot_download(repo_id=args.model_name,
                   resume_download=True,
                   local_dir_use_symlinks=False)
 
+
+# For example, you can use allow_patterns to only download JSON configuration files:
+from huggingface_hub import snapshot_download
+snapshot_download(repo_id="lysandre/arxiv-nlp", allow_patterns="*.json")
+
+# On the other hand, ignore_patterns can exclude certain files from being downloaded. The following example ignores the .msgpack and .h5 file extensions:
+
+from huggingface_hub import snapshot_download
+snapshot_download(repo_id="lysandre/arxiv-nlp", ignore_patterns=["*.msgpack", "*.h5"])
+
 ```
 ### Command:
-```
+```bash
 pip install -U huggingface_hub
 pip install -U hf-transfer
 export HF_HUB_ENABLE_HF_TRANSFER=1
 huggingface-cli download --resume-download playgroundai/playground-v2.5-1024px-aesthetic --local-dir 要保存的路径 --local-dir-use-symlinks False
+
+huggingface-cli download bigscience/bloom --allow-patterns=*.safetensors
+huggingface-cli download bigscience/bloom --ignore-patterns=*.safetensors
 ```
