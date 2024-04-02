@@ -12,13 +12,16 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-alias proxy_on="export http_proxy=100.66.28.72:3128;export https_proxy=100.66.28.72:3128"
-alias proxy_off="unset http_proxy https_proxy"
+alias pon="export http_proxy=100.66.28.72:3128;export https_proxy=100.66.28.72:3128"
+alias poff="unset http_proxy https_proxy"
 alias gjs="cd /ML-A100/team/mm/gujiasheng"
 alias ns="watch -n 1 nvidia-smi"
 alias ll="ls -l"
 alias sb="source ~/.bashrc"
-alias gpu="echo $CUDA_VISIBLE_DEVICES"
+alias gpu='echo $CUDA_VISIBLE_DEVICES'
+function ca() {
+    conda activate "$1"
+}
 function 2gpu() {
     export CUDA_VISIBLE_DEVICES="$1"
 }
@@ -30,7 +33,7 @@ export HOME=/ML-A100/team/mm/gujiasheng
 
 [ -r ~/.volc/.profile ] && source ~/.volc/.profile #[volc installer]
 
- export PATH="/usr/local/cuda-11.8/bin:$PATH"
+ # export PATH="/usr/local/cuda-11.8/bin:$PATH"
  # export LD_LIBRARY_PATH="/usr/local/cuda-11.8/lib64:$LD_LIBRARY_PATH"
 
 export NVM_DIR="$HOME/.nvm"
