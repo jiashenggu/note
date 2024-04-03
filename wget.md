@@ -24,3 +24,15 @@ FILENAME=
 wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=${FILEID}' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=${FILEID}" -O ${FILENAME} && rm -rf /tmp/cookies.txt
 ```
 同样替换其中的FILEID和FILENAME即可。注意FILEID有两处。
+
+### Download SAM dataset
+```bash
+while read file_name cdn_link; do wget -O "$file_name" "$cdn_link"; done < links.txt
+```
+
+Using aria2 supports multi-threaded downloading and resuming.
+Remove the header line of the links file provided by meta, then run:
+
+```bash
+while read file_name cdn_link; do aria2c -x4 -c -o "$file_name" "$cdn_link"; done <  file_list.txt
+```
