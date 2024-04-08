@@ -4,6 +4,11 @@ debug:
     "justMyCode": false, will not skip code in packages
 }
 ```
+jupyter debug:  
+在设置里，搜索 debug jupyter 可以很容易看到
+![image](https://github.com/jiashenggu/note/assets/32376856/b6612658-4f97-4acf-b501-7780ac78a798)
+
+
 
 text automatically change lines
 ```
@@ -29,3 +34,4 @@ vscode在最上面显示当前类：
 
 import readline
 input() 可以用方向键
+
