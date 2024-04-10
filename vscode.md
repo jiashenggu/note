@@ -4,6 +4,29 @@ debug:
     "justMyCode": false, will not skip code in packages
 }
 ```
+```
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "module": "accelerate.commands.launch",
+            "args": [
+                "--config_file", "megatron_gpt_config.yaml",
+                "./examples/by_feature/megatron_lm_gpt_pretraining.py",
+                "--config_name ", "gpt2-large",
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": false
+        }
+    ]
+}
+```
 jupyter debug:  
 在设置里，搜索 debug jupyter 可以很容易看到
 ![image](https://github.com/jiashenggu/note/assets/32376856/b6612658-4f97-4acf-b501-7780ac78a798)
