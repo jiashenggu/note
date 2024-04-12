@@ -19,6 +19,7 @@
             "module": "accelerate.commands.launch",
             "args": [
                 "--config_file", "megatron_gpt_config.yaml",
+                "--debug",
                 "./examples/by_feature/megatron_lm_gpt_pretraining.py",
                 "--config_name ", "gpt2-large",
             ],
