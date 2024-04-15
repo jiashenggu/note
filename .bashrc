@@ -22,6 +22,9 @@ alias gpu='echo $CUDA_VISIBLE_DEVICES'
 function ca() {
     conda activate "$1"
 }
+function pag() {
+     ps aux | grep "$1"
+}
 function 2gpu() {
     export CUDA_VISIBLE_DEVICES="$1"
 }
