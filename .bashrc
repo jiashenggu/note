@@ -29,10 +29,10 @@ function 2gpu() {
     export CUDA_VISIBLE_DEVICES="$1"
 }
 
-export HF_HOME=/ML-A100/team/mm/gujiasheng/.cache/huggingface
-export TMPDIR=/ML-A100/team/mm/gujiasheng/tmp
-export PIP_CACHE_DIR=/ML-A100/team/mm/gujiasheng/.cache/pip
-export HOME=/ML-A100/team/mm/gujiasheng
+export HOME=/to_input
+export HF_HOME=$HOME/.cache/huggingface
+export TMPDIR=$HOME/tmp
+export PIP_CACHE_DIR=$HOME/.cache/pip
 
 [ -r ~/.volc/.profile ] && source ~/.volc/.profile #[volc installer]
 
