@@ -12,3 +12,8 @@ While we followed a bucketing strategy similar to SDXL’s, we
 carefully crafted the data pipeline to ensure a more balanced bucket sampling strategy across various
 aspect ratios. Our strategy avoids catastrophic forgetting and helps the model not be biased towards
 one ratio or another.
+
+# [测试函数法推导连续性方程和Fokker-Planck方程](https://kexue.fm/archives/9461)
+(19)
+In summary, the absence of the f(x) in the second-order term is due to the specific rules of Itō's calculus that account for the quadratic variation of the Brownian motion. The f(x) term is not ignored; it's that the second-order term in the stochastic Taylor expansion is specifically related to the variance of the stochastic process, which involves g(x) rather than 
+ f(x).
