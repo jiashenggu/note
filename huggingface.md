@@ -38,6 +38,6 @@ pip install -U hf-transfer
 export HF_HUB_ENABLE_HF_TRANSFER=1
 huggingface-cli download --resume-download playgroundai/playground-v2.5-1024px-aesthetic --local-dir 要保存的路径 --local-dir-use-symlinks False
 
-huggingface-cli download bigscience/bloom --allow-patterns=*.safetensors
-huggingface-cli download bigscience/bloom --ignore-patterns=*.safetensors
+huggingface-cli download bigscience/bloom --include *.safetensors
+huggingface-cli download bigscience/bloom --exclude *.safetensors
 ```
