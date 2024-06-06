@@ -36,8 +36,15 @@ snapshot_download(repo_id="lysandre/arxiv-nlp", ignore_patterns=["*.msgpack", "*
 pip install -U huggingface_hub
 pip install -U hf-transfer
 export HF_HUB_ENABLE_HF_TRANSFER=1
-huggingface-cli download --resume-download playgroundai/playground-v2.5-1024px-aesthetic --local-dir 要保存的路径 --local-dir-use-symlinks False
 
+```bash
+huggingface-cli download --resume-download $MODEL_NAME --local-dir $LOCAL_DIR --local-dir-use-symlinks False
+```
+```bash
+huggingface-cli download --resume-download $DATASET_NAME --repo-type dataset --local-dir 要保存的路径 --local-dir-use-symlinks False
+huggingface-cli download --resume-download $SPACE --repo-type space --local-dir 要保存的路径 --local-dir-use-symlinks False
+```
+```bash
 huggingface-cli download bigscience/bloom --include *.safetensors
 huggingface-cli download bigscience/bloom --exclude *.safetensors
 ```
