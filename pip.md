@@ -9,15 +9,50 @@ pip install -i https://mirrors.aliyun.com/pypi/simple torch
 ```bash
 vi ~/.pip/pip.conf
 ```
+或者在
+pip源配置文件可以放置的位置：
+```
+Linux/Unix:
 
+/etc/pip.con
+
+~/.pip/pip.conf
+
+~/.config/pip/pip.conf
+
+Mac OSX:
+
+~/Library/Application Support/pip/pip.conf
+
+~/.pip/pip.conf
+
+/Library/Application Support/pip/pip.conf
+
+Windows:
+
+%APPDATA%\pip\pip.ini
+
+%HOME%\pip\pip.ini
+
+C:\Documents and Settings\All Users\Application Data\PyPA\pip\pip.conf (Windows XP)
+
+C:\ProgramData\PyPA\pip\pip.conf (Windows 7及以后)
+```
 ```bash
 [global]
 no-cache-dir = true
 index-url = https://mirrors.aliyun.com/pypi/simple/
-extra-index-url =
-        https://pypi.ngc.nvidia.com
+extra-index-url = https://pypi.ngc.nvidia.com
 trusted-host = mirrors.aliyun.com
 ```
+```bash
+[global]
+index-url = http://pypi.douban.com/simple #豆瓣源，可以换成其他的源
+trusted-host = pypi.douban.com            #添加豆瓣源为可信主机，要不然可能报错
+disable-pip-version-check = true          #取消pip版本检查，排除每次都报最新的pip
+timeout = 120
+```
+
 ## 常用源
 阿里云：http://mirrors.aliyun.com/pypi/simple/
 
