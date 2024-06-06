@@ -36,7 +36,7 @@ snapshot_download(repo_id="lysandre/arxiv-nlp", ignore_patterns=["*.msgpack", "*
 pip install -U huggingface_hub
 pip install -U hf-transfer
 export HF_HUB_ENABLE_HF_TRANSFER=1
-
+```
 ```bash
 huggingface-cli download --resume-download $MODEL_NAME --local-dir $LOCAL_DIR --local-dir-use-symlinks False
 ```
