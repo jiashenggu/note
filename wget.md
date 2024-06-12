@@ -1,5 +1,18 @@
 此处的文件是指公开的文件，不需要输入密码也不需要登录Google drive即可获取的文件。
 
+# default:
+-b, –background 启动后转入后台执行
+
+-t, –tries=NUMBER 设定最大尝试链接次数(0 表示无限制)
+
+-c, –continue 接着下载没下载完的文件
+
+
+```bash
+wget -t 0 -c -b
+```
+
+
 1. 下载小文件
 ```
 FILEID=
