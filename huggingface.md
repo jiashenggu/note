@@ -48,3 +48,15 @@ huggingface-cli download --resume-download $SPACE --repo-type space --local-dir 
 huggingface-cli download bigscience/bloom --include *.safetensors
 huggingface-cli download bigscience/bloom --exclude *.safetensors
 ```
+### Gated dataset
+
+Change auth settings to fit usage.
+```python
+import huggingface_hub
+
+huggingface_hub.login(token="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")
+```
+
+```bash
+huggingface-cli login
+```
