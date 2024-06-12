@@ -1,3 +1,4 @@
+## Proxy will affect many web applications!!!
 https://www.bilibili.com/read/cv23352904/
 
 # ~/.bashrc （设置环境，负责一般意义上的联网...）
