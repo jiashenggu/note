@@ -5,31 +5,58 @@ export HF_ENDPOINT=https://hf-mirror.com
 export HF_HOME=${HOME}/.cache
 ```
 ```python
-# https://huggingface.co/docs/huggingface_hub/package_reference/file_download
 from huggingface_hub import snapshot_download
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--model_name', type=str, default="adept/fuyu-8b", help='Name of the model to download')
+parser.add_argument('-m', '--model_name', type=str, default="adept/fuyu-8b", help='Name of the model to download')
 args = parser.parse_args()
 
-snapshot_download(repo_id=args.model_name,
-                  repo_type='model',
-                  local_dir='./'+args.model_name.split('/')[1],
-                  cache_dir='~/.cache',
-                  resume_download=True,
-                  local_dir_use_symlinks=False)
+def download_model():
+    try:
+        snapshot_download(repo_id=args.model_name,
+                          repo_type='model',
+                          local_dir='./'+(args.model_name.split('/')[1] if len(args.model_name.split('/'))==2 else args.model_name.split('/')[0]),
+                          cache_dir='/ML-A100/team/mm/gujiasheng/.cache',
+#                           allow_patterns=["*.json", "*.bin", "*.md", "*.safetensors", "*.pth", "*.onnx"],
+                          ignore_patterns=[])
+    except Exception as e:
+        print(e)
+        print("Download failed. Resuming download...")
+        download_model()
+
+download_model()
 
 
-# For example, you can use allow_patterns to only download JSON configuration files:
+print("Model download complete!")
+```
+
+```python
 from huggingface_hub import snapshot_download
-snapshot_download(repo_id="lysandre/arxiv-nlp", allow_patterns="*.json")
+import argparse
+import huggingface_hub 
 
-# On the other hand, ignore_patterns can exclude certain files from being downloaded. The following example ignores the .msgpack and .h5 file extensions:
+huggingface_hub.login(token="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")
+parser = argparse.ArgumentParser()
+parser.add_argument('-d', '--dataset_name', type=str, default="adept/fuyu-8b", help='Name of the dataset to download')
+args = parser.parse_args()
 
-from huggingface_hub import snapshot_download
-snapshot_download(repo_id="lysandre/arxiv-nlp", ignore_patterns=["*.msgpack", "*.h5"])
+def download_dataset():
+    try:
+        snapshot_download(repo_id=args.dataset_name,
+                          repo_type='dataset',
+                          local_dir='./'+(args.dataset_name.split('/')[1] if len(args.dataset_name.split('/'))==2 else args.dataset_name.split('/')[0]),
+                          local_dir_use_symlinks=False,
+                          cache_dir='/ML-A100/team/mm/gujiasheng/.cache',
+                          force_download=False)
+    except Exception as e:
+        print("Error:", e)
+        print("Download failed. Resuming download...")
+        download_dataset()
 
+download_dataset()
+
+print("Dataset download complete!")
 ```
 ### Command:
 ```bash
