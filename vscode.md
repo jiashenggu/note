@@ -1,8 +1,12 @@
 # Plugins:
 Live server: Launch a development local Server with live reload feature for static & dynamic pages
+
 Bookmarks: Mark lines and jump to them
+
 Gitlens: Supercharge Git within VS Code
+
 Partial Diff: Compare (diff) text selections within a file, across files, or to the clipboard
+
 # debug: 
 ```json
 {
@@ -69,7 +73,7 @@ Partial Diff: Compare (diff) text selections within a file, across files, or to 
 ## text automatically change lines
 ```json
 {
-    "notebook.output.wordWrap": true:
+    "notebook.output.wordWrap": true
 }
 ```
 ## tabs wrap to multiple lines
