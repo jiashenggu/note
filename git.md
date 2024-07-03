@@ -26,3 +26,7 @@ Host github.com
   IdentityFile  ~/.ssh/id_ed25519
   IdentitiesOnly yes
 ```
+
+# upstream
+
+![859536ca4d8ece013fb18a495f35bf99](https://github.com/jiashenggu/note/assets/32376856/9d6a6c39-d52f-4b8b-b80b-86747163457a)
