@@ -1,3 +1,13 @@
+# 扩散模型
+
+为了衡量加噪加到 t=t 时刻嘈杂图像中噪声的量和形状，我们引入变量 αt 和 σt 来表示特定时刻注入噪声的均值和标准差。根据论文作者复杂的数学推理，αt 与 σt 的平方和会始终等于 1。αt^2 会随时间步增加而原来越小，而 σt^2 = 1 - αt^2 会越来越大，二者平方的比值就是前文提到的信噪比 snr(t) = αt^2 / σt^2。
+
+# 扩散模型中的v-prediction
+https://zhuanlan.zhihu.com/p/678942992
+
+# Rectified flow
+https://zhuanlan.zhihu.com/p/603740431
+
 # Playground v2.5
 
 ## EDM
