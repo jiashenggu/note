@@ -1,4 +1,5 @@
- ```
+![60e84fa46f60964f8f791f9bcda01f95](https://github.com/user-attachments/assets/e2afa524-fc07-45e3-a68b-864f2e793581)
+```
 export HF_ENDPOINT=https://hf-mirror.com
 ```
 ```
