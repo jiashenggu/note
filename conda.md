@@ -7,3 +7,5 @@ vim ~/anaconda3/bin/pip
 ```
 vim ~/anaconda3/bin/conda
 ```
+
+在envs里也同理
