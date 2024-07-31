@@ -19,6 +19,9 @@ alias ns="watch -n 1 nvidia-smi"
 alias ll="ls -l"
 alias sb="source ~/.bashrc"
 alias gpu='echo $CUDA_VISIBLE_DEVICES'
+function pi() {
+    pip install "$1"
+}
 function ca() {
     conda activate "$1"
 }
@@ -29,11 +32,11 @@ function 2gpu() {
     export CUDA_VISIBLE_DEVICES="$1"
 }
 
-export HOME=/to_input
+export HOME=$input
 export HF_HOME=$HOME/.cache/huggingface
 export TMPDIR=$HOME/tmp
 export PIP_CACHE_DIR=$HOME/.cache/pip
-
+export CUDA_HOME=/usr/local/cuda-11.8
 [ -r ~/.volc/.profile ] && source ~/.volc/.profile #[volc installer]
 
  # export PATH="/usr/local/cuda-11.8/bin:$PATH"
