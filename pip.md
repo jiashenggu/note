@@ -54,6 +54,8 @@ timeout = 120
 ```
 
 ## 常用源
+默认：https://pypi.org/simple
+
 阿里云：http://mirrors.aliyun.com/pypi/simple/
 
 豆瓣 ：http://pypi.doubanio.com/simple/
