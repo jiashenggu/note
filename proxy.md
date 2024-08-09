@@ -47,3 +47,10 @@ torch_command = os.environ.get('TORCH_COMMAND', "pip --proxy=你的代理地址 
  }
 }
 ```
+
+# use os to set proxy
+```python
+import os
+os.environ["http_proxy"] = '100.66.28.72:3128'
+os.environ["https_proxy"] = '100.66.28.72:3128'
+```
