@@ -12,3 +12,7 @@ vim ~/anaconda3/bin/conda
 
 # How to Relocate Your Anaconda or Miniconda Installation on Linux
 https://www.earthinversion.com/utilities/How-to-Relocate-Your-Anaconda-or-Miniconda-Installation-on-Linux/
+
+```python
+find . -type f -exec sed -i 's|/path/to/old/conda|/new/path/to/conda|g' {} +
+```
