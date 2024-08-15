@@ -22,8 +22,8 @@ Partial Diff: Compare (diff) text selections within a file, across files, or to 
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Current File",
-            "type": "python",
+            "name": "Python: accelerate",
+            "type": "debugpy",
             "request": "launch",
             "module": "accelerate.commands.launch",
             "args": [
