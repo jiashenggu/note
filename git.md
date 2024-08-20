@@ -4,6 +4,10 @@ git config --global user.name "jiashenggu"
 git config --global user.email "jiashengguwen@gmail.com"
 ```
 
+# generate ssh key
+```
+ssh-keygen -t ed25519 -C "your_email@example.com"
+```
 # Compare two repos
 ```bash
 git remote add -f b path/to/repo_b.git
