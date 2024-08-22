@@ -1,3 +1,7 @@
+删除指定文件名后缀
+```bash
+for file in *_42.jpg; do mv "$file" "${file/_42.jpg/.jpg}"; done
+```
 查看后台运行的进程。
 ```bash
 ps aux | grep [进程名]
