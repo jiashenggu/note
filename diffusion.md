@@ -7,6 +7,13 @@ https://zhuanlan.zhihu.com/p/678942992
 
 # Rectified flow
 https://zhuanlan.zhihu.com/p/603740431
+## 优点
+$X_t = tX_1 + (1-t)X_0$
+
+1. 基于简单的常微分方程ODE(Ordinary Differential Equation)，不需要变分法或随机微分方程SDE(Stochastic Differential Equation)的知识，概念简单
+2. 推理时需要步数更少，速度更快
+3. 使用reflow方法实现“一步生成，快速，计算量小”（对比扩散模型）
+4. loss和模型表现更相关（对比扩散模型）
 
 # Playground v2.5
 
