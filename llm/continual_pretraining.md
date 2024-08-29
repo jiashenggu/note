@@ -32,26 +32,27 @@
   
   不合适的learning rate会导致general能力”受损“。以及learning rate大小带来的影响，跟增训中文，一点点提高中文比例，有点异曲同工。从刘乾的反馈来看，他们不扩词表，先找到合适的learning rate，再找到合适的比例，直接continue pretrain，loss就能稳定持续下降了
 
-continue pretrain分成三大类  
+# continue pretrain分成三大类
+
 领域知识，语言类，long context
 
 受到词表，知识难度，attention分布的影响，这几类知识的学习都会有不少的差距。其中领域知识增强类的domain更容易学习，因为基座llm中存在这样的知识，所以起始loss会更低，遗忘程度低，最优的配比低。  
 语言类的domain和long context的数据更难学习，前者是因为语言的gap导致初始loss偏高，但随着不断的训练，loss会稳定下降，但遗忘程度高，最优配比高，后者对资源的消耗更高，遗忘程度高，最优配比高。
 
-### **领域知识Continue Pretrain**
+## 领域知识Continue Pretrain
 
 **难点**  
 比例的控制
 
-## **语言类Continue Pretrain**
+## 语言类Continue Pretrain
 
 **难点**  
 去年大家的常用做法，就是已知llama的中文占比5%，那么我一点点增大中文的训练样本比例。  
 而不是算好一个比例，直接硬train，这很容易导致loss直接崩掉。
 
-### **Long Context Continue Pretrain**
+## Long Context Continue Pretrain
 
-**3.3.1 continue pretrain学了什么**  
+**continue pretrain学了什么**  
 拿long context举例子，根据我们的一些分析，LLM本身就具有long context的能力，或者说是已经学到了文本的框架。  
 而之所以外推不好，其中一个猜测就是attention分布导致的。
 
