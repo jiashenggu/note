@@ -1,3 +1,5 @@
+https://www.jinhang.work/tech/download-shared-files-using-wget-or-curl/
+
 此处的文件是指公开的文件，不需要输入密码也不需要登录Google drive即可获取的文件。
 
 # default:
