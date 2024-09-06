@@ -1,3 +1,4 @@
+https://github.com/mini-sora/minisora/blob/main/notes/SD3_zh-CN.md
 # 文生图之SD3：迈向transformer时代
 
 在发布[Stable Diffusion 3](https://stability.ai/news/stable-diffusion-3)之后，StabilityAI最近终于放出了[SD3的技术报告](https://stability.ai/news/stable-diffusion-3-research-paper)，相比SD之前的版本，SD3有比较大的改进。
