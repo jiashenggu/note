@@ -1,3 +1,7 @@
+# torch.argsort()
+https://blog.csdn.net/weixin_42052231/article/details/110941232
+返回的是一个排序好的列表值的索引。也就是根据所给的索引，依次取出元素，就会得到一个排序好的tensor。
+
 # 统计模型参数
 ```python
 def get_parameter_number(model):
