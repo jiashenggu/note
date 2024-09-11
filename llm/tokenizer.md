@@ -9,9 +9,9 @@ BPE (Byte Pair Encoding):
 
 WordPiece:
 1. 类似BPE,但使用不同的评分标准
-2. 选择能最大化训练数据似然的合并操作
-3. 直接使用 词表 分词, 采用 正向最长匹配 的策略。也就是说, 不断寻找 word 中的最长前缀 subword。用一个具体的例子来说明:词表中有 "研究", "生命", "起源", "研究生", 生 等 subword, 现在对 "研究生命起源" 这样一个 word 进行分词:
-$score(sw1, sw2) = \frac{count(sw1, sw2)}{count(sw1), count(sw2)}$
+2. 选择能最大化训练数据似然的合并操作，$score(sw1, sw2) = \frac{count(sw1, sw2)}{count(sw1), count(sw2)}$
+3. 直接使用 词表 分词, 采用 正向最长匹配 的策略。也就是说, 不断寻找 word 中的最长前缀 subword。:
+
 
 Unigram:
 1. 自顶向下的分割策略
