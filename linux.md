@@ -28,3 +28,78 @@ PID：进程ID。
 ACCESS：访问模式（例如，F表示文件打开，R表示读，W表示写）。
 COMMAND：使用该文件或设备的进程名称。
 
+# tar
+
+```bash
+tar -tvf archive.tar
+```
+-t 表示列出内容  
+-v 表示详细模式，显示更多信息  
+-f 指定要操作的tar文件名  
+
+如果是压缩的tar文件（如.tar.gz或.tgz），可以使用：
+```bash
+tar -ztvf archive.tar.gz
+```
+
+要从tar文件中解压特定的文件夹，可以使用以下命令：
+-x 表示解压  
+-v 表示详细模式  
+-f 指定tar文件名  
+path/to/folder 是你想要解压的特定文件夹路径  
+
+## 要直接查看tar文件中的顶层文件夹（即只列出第一层目录结构），我们可以使用一些额外的命令行工具结合tar命令。这里有几种方法：
+
+1. 使用 `tar` 和 `grep`：
+
+```bash
+tar -tf archive.tar | grep -v '/' | sort -u
+```
+
+对于gzip压缩的文件：
+
+```bash
+tar -ztf archive.tar.gz | grep -v '/' | sort -u
+```
+
+这个命令的工作原理：
+- `tar -tf` 列出所有文件
+- `grep -v '/'` 排除包含 '/' 的行（即子目录）
+- `sort -u` 排序并去重
+
+2. 使用 `tar` 和 `awk`：
+
+```bash
+tar -tf archive.tar | awk -F/ '{print $1}' | sort -u
+```
+
+对于gzip压缩的文件：
+
+```bash
+tar -ztf archive.tar.gz | awk -F/ '{print $1}' | sort -u
+```
+
+这个命令的工作原理：
+- `awk -F/ '{print $1}'` 只打印第一个斜杠前的内容
+- `sort -u` 排序并去重
+
+3. 使用 `tar` 和 `sed`：
+
+```bash
+tar -tf archive.tar | sed -e 's/\/.*//' | sort -u
+```
+
+对于gzip压缩的文件：
+
+```bash
+tar -ztf archive.tar.gz | sed -e 's/\/.*//' | sort -u
+```
+
+这个命令的工作原理：
+- `sed -e 's/\/.*//'` 删除第一个斜杠及其后的所有内容
+- `sort -u` 排序并去重
+
+这些方法都能让你只看到tar文件的顶层目录结构。选择哪种方法主要取决于你的个人偏好和系统上可用的工具。
+
+您想尝试哪种方法？或者您对这些命令的某个部分需要更详细的解释吗？
+
