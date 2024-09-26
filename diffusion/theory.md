@@ -34,3 +34,32 @@ one ratio or another.
 (19)
 In summary, the absence of the f(x) in the second-order term is due to the specific rules of Itō's calculus that account for the quadratic variation of the Brownian motion. The f(x) term is not ignored; it's that the second-order term in the stochastic Taylor expansion is specifically related to the variance of the stochastic process, which involves g(x) rather than 
  f(x).
+
+# 通用形式探索
+$p\left(\mathbf{x}_t \mid \mathbf{x}_0\right)=\mathcal{N}\left(\mathbf{x}_t ; s(t) \mathbf{x}_0, s^2(t) \sigma^2(t) \mathbf{I}\right)$
+
+$\frac{\mathrm{d} \mathbf{m}}{\mathrm{d} t}=\mathbb{E}\left[f\left(\mathbf{x}_t, t\right)\right]$
+
+$\frac{\mathrm{d} \mathbf{m}}{\mathrm{d} t}=\mathbb{E}\left[f\left(t)\mathbf{x}_t\right)\right]$
+
+$m = E[x_t]$
+
+$f(t) \in R^1$
+
+Use the method of separation of variables and r to get
+$m(t)=m(0)e^{\int_0^t f(r) \mathrm{d} r}$
+```math
+\begin{aligned}
+& \mathrm{d} \mathbf{m}=\mathbb{E}\left[f(t) \mathbf{x}_t\right] \mathrm{d} t \\
+& \mathrm{~d} \mathbf{m}=f(t) \mathbb{E}[\mathbf{x}_t] \mathrm{d} t \\
+& \mathrm{~d} \mathbf{m}=f(t) \mathbf{m} \mathrm{d} t \\
+& \frac{\mathrm{~d} \mathbf{m}}{\mathbf{m}}=f(t) \mathrm{d} t \\
+
+& \int \frac{1}{\mathbf{m}} \mathrm{~d} \mathbf{m}=\int_0^t f(r) \mathrm{d} r+C \\
+& \ln \mathbf{m}=\int_0^t f(r) \mathrm{d} r+C \\
+& \mathbf{m}(t)=e^{\int_0^t f(r) \mathrm{d} r+C}=e^{\int_0^t f(r) \mathrm{d} r} e^C=A e^{\int_0^t f(r) \mathrm{d} r}
+
+& \mathbf{m}(0)=A e^{\int_0^0 f(t) \mathrm{d} t}=A e^0=A=\mathbf{x}_0 \\
+& \mathbf{m}(t)=\mathbf{m}(0) e^{\int_0^t f(r) \mathrm{d} r} 
+\end{aligned}
+```
