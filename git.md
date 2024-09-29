@@ -30,6 +30,15 @@ Host github.com
   IdentityFile  ~/.ssh/id_ed25519
   IdentitiesOnly yes
 ```
+## 显示远程分支
+https://www.freecodecamp.org/chinese/news/git-list-remote-branches/
+
+git branch -r
+git ls-remote --heads
+git ls-remote
+git show-branch -r
+git branch -vv
+git branch -a
 
 
 # 如何将上游 (upstream) 新建分支 (origin 没有) 导入到 origin 中？
