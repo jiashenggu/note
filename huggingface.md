@@ -37,7 +37,6 @@ from huggingface_hub import snapshot_download
 import argparse
 import huggingface_hub 
 
-huggingface_hub.login(token="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")
 parser = argparse.ArgumentParser()
 parser.add_argument('-d', '--dataset_name', type=str, default="adept/fuyu-8b", help='Name of the dataset to download')
 args = parser.parse_args()
@@ -82,7 +81,7 @@ Change auth settings to fit usage.
 ```python
 import huggingface_hub
 
-huggingface_hub.login(token="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")
+huggingface_hub.login(token="")
 ```
 
 ```bash
