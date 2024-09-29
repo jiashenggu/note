@@ -81,7 +81,7 @@ Change auth settings to fit usage.
 ```python
 import huggingface_hub
 
-huggingface_hub.login(token="")
+huggingface_hub.login(token="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")
 ```
 
 ```bash
