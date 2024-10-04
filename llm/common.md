@@ -2,6 +2,8 @@ sample-100BT: a subset randomly sampled from the whole dataset of around 100B gp
 
 sample-10BT: a subset randomly sampled from the whole dataset of around 10B gpt2 tokens (27.6GB)
 
+For models using byte-pair encoding (BPE) like those from Google and OpenAI, is .~4 bytes/token
+
 Benchmark measurements for MPT models trained on MosaicML platform, including throughput, MFU, and HFU.
 
 https://github.com/mosaicml/llm-foundry/blob/main/scripts/train/benchmarking/README.md
