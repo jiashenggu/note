@@ -8,6 +8,9 @@ vim ~/anaconda3/bin/pip
 vim ~/anaconda3/bin/conda
 ```
 
+```
+vim ~/anaconda3/bin/uvicorn
+```
 
 在envs里也同理
 
