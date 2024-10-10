@@ -1,6 +1,6 @@
 ### Use wget to download models:
 ```
-wget https://civitai.com/api/download/models/{modelVersionId} --content-disposition
+wget https://civitai.com/api/download/models/{modelVersionId}?token=0806782ed30e485eddfb4c4f03d3ece9 --content-disposition
 ```
 
 ### VAE fp16 format: sdxl-vae-fp16-fix:
