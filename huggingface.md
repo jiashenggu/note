@@ -87,3 +87,6 @@ huggingface_hub.login(token="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")
 ```bash
 huggingface-cli login
 ```
+```
+wget --header="Authorization: Bearer <HF_TOKEN>" hf/file/download/url
+```
