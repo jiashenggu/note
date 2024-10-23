@@ -23,4 +23,19 @@ class Swish(nn.Module):
         return x * F.sigmoid(x)
 ```
 
+#### SwiGLU和SiLU的主要区别如下：
+
+结构差异：
+
+$SiLU (Sigmoid Linear Unit): f(x) = x * sigmoid(x)$
+
+$SwiGLU: f(x, y) = x * SiLU(y) = x * (y * sigmoid(y))$
+
+计算方式：
+SiLU是单输入激活函数
+
+SwiGLU是门控机制，需要两个输入向量，一个作为主要输入(x)，另一个作为门控信号(y)
+
+
+
 https://blog.csdn.net/Roaddd/article/details/114793441
