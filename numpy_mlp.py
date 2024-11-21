@@ -17,64 +17,56 @@ class ReLU(Activation):
     def backward(self, grad_output):
         return grad_output * (self.input > 0)
 
-# Linear激活函数
-class Linear(Activation):
+# 线性层
+class Linear:
+    def __init__(self, input_dim, output_dim):
+        self.W = np.random.randn(input_dim, output_dim) / np.sqrt(input_dim)
+        self.b = np.zeros(output_dim)
+        
     def forward(self, x):
-        return x
+        self.input = x
+        return np.dot(x, self.W) + self.b
     
     def backward(self, grad_output):
-        return grad_output
+        self.grad_W = np.dot(self.input.T, grad_output) / self.input.shape[0]
+        self.grad_b = np.sum(grad_output, axis=0) / self.input.shape[0]
+        return np.dot(grad_output, self.W.T)
+    
+    def update(self, lr):
+        self.W -= lr * self.grad_W
+        self.b -= lr * self.grad_b
 
 class MLP:
     def __init__(self, input_dim, hidden_dim, output_dim, lr=0.01):
-        # 初始化权重和偏置
-        self.W1 = np.random.randn(input_dim, hidden_dim) / np.sqrt(input_dim)
-        self.b1 = np.zeros(hidden_dim)
-        self.W2 = np.random.randn(hidden_dim, output_dim) / np.sqrt(hidden_dim)
-        self.b2 = np.zeros(output_dim)
+        # 初始化层
+        self.linear1 = Linear(input_dim, hidden_dim)
+        self.activation = ReLU()
+        self.linear2 = Linear(hidden_dim, output_dim)
         self.lr = lr
         
-        # 初始化激活函数
-        self.activation1 = ReLU()
-        self.activation2 = Linear()
-        
     def forward(self, X):
-        self.X = X
-        # 第一层
-        self.z1 = np.dot(X, self.W1) + self.b1
-        self.a1 = self.activation1.forward(self.z1)
-        # 第二层
-        self.z2 = np.dot(self.a1, self.W2) + self.b2
-        self.a2 = self.activation2.forward(self.z2)
-        # softmax
-        self.output = self.softmax(self.a2)
+        # 第一层线性变换
+        self.z1 = self.linear1.forward(X)
+        # ReLU激活
+        self.a1 = self.activation.forward(self.z1)
+        # 第二层线性变换
+        self.z2 = self.linear2.forward(self.a1)
+        # softmax输出
+        self.output = self.softmax(self.z2)
         return self.output
     
     def backward(self, y):
-        m = y.shape[0]
-        
         # 输出层梯度
         dz2 = self.output - y  # softmax的导数
-        da2 = self.activation2.backward(dz2)
-        dW2 = np.dot(self.a1.T, da2) / m
-        db2 = np.sum(da2, axis=0) / m
+        da1 = self.linear2.backward(dz2)
         
         # 隐藏层梯度
-        da1 = np.dot(da2, self.W2.T)
-        dz1 = self.activation1.backward(da1)
-        dW1 = np.dot(self.X.T, dz1) / m
-        db1 = np.sum(dz1, axis=0) / m
-        
-        self.gradients = {
-            'W1': dW1, 'b1': db1,
-            'W2': dW2, 'b2': db2
-        }
+        dz1 = self.activation.backward(da1)
+        self.linear1.backward(dz1)
         
     def update(self):
-        self.W1 -= self.lr * self.gradients['W1']
-        self.b1 -= self.lr * self.gradients['b1']
-        self.W2 -= self.lr * self.gradients['W2']
-        self.b2 -= self.lr * self.gradients['b2']
+        self.linear1.update(self.lr)
+        self.linear2.update(self.lr)
     
     def softmax(self, x):
         exp_x = np.exp(x - np.max(x, axis=1, keepdims=True))
