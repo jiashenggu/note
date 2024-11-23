@@ -1,4 +1,5 @@
 # accelerate
+```bash
 accelerate launch \
     --config_file configs/fsdp_config.yaml \
     --main_process_ip $MASTER_ADDR \
@@ -26,3 +27,4 @@ accelerate launch \
     --weight_decay 0.01 \
     --warmup_ratio 0.03 \
     --use_flash_attn True
+```
