@@ -28,6 +28,9 @@ function ca() {
 function pag() {
      ps aux | grep "$1"
 }
+function plg() {
+     pip list | grep "$1"
+}
 function 2gpu() {
     export CUDA_VISIBLE_DEVICES="$1"
 }
