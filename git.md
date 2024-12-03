@@ -40,6 +40,8 @@ git show-branch -r
 git branch -vv
 git branch -a
 
+# Github进行fork后如何与原仓库同步：重新fork很省事，但不如反复练习版本合并
+https://github.com/selfteaching/the-craft-of-selfteaching/issues/67
 
 # 如何将上游 (upstream) 新建分支 (origin 没有) 导入到 origin 中？
 
