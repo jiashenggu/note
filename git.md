@@ -40,6 +40,10 @@ git show-branch -r
 git branch -vv
 git branch -a
 
+
+# [git commit 撤销的三种方法](https://blog.csdn.net/weixin_45678402/article/details/134663161)
+
+
 # Github进行fork后如何与原仓库同步：重新fork很省事，但不如反复练习版本合并
 https://github.com/selfteaching/the-craft-of-selfteaching/issues/67
 
