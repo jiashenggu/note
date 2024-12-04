@@ -1,3 +1,4 @@
+# [Use SSH, not HTTPS](https://mkyong.com/git/github-keep-asking-for-username-password-when-git-push/])
 # git config
 ```
 git config --global user.name "jiashenggu"
