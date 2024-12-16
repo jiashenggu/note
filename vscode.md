@@ -96,3 +96,8 @@ workspace settings
 import readline
 ```
 
+## vscode解决“无法将“xxx”项识别为 cmdlet、函数、脚本文件或可运行程序的名称“
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine")
+
+https://juejin.cn/post/7411516362915151899
+
