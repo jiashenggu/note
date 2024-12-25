@@ -38,9 +38,6 @@ class CustomMultiheadAttention(nn.Module):
         K = self.k_proj(key).view(batch_size, seq_length, self.num_heads, self.head_dim).transpose(1, 2)
         V = self.v_proj(value).view(batch_size, seq_length, self.num_heads, self.head_dim).transpose(1, 2)
 
-        # if attn_mask is not None:
-        #     attn_mask = attn_mask.unsqueeze(1)
-
         # Scaled Dot-Product Attention
         context = self.attention(Q, K, V, attn_mask)
         context = context.transpose(1, 2).contiguous().view(batch_size, seq_length, embed_dim)
