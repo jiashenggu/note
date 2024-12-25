@@ -40,7 +40,28 @@ class CustomMultiheadAttention(nn.Module):
 
         # Scaled Dot-Product Attention
         context = self.attention(Q, K, V, attn_mask)
-        context = context.transpose(1, 2).contiguous().view(batch_size, seq_length, embed_dim)
+        # reshape 和 view 的主要区别是：
+        # view 要求张量必须是连续的，如果不连续就会报错
+        # reshape 会自动处理非连续的情况，如果需要的话会隐式地调用 contiguous()
+        # 因此使用 reshape 更方便，也能让代码更简洁。除非有特殊的性能考虑（因为 view 不会复制数据），否则推荐使用 reshape。
+        # 所以：
+        # # 这两种写法的性能是完全等价的
+        # context = context.transpose(1, 2).contiguous().view(batch_size, seq_length, embed_dim)
+        # context = context.transpose(1, 2).reshape(batch_size, seq_length, embed_dim)
+        # 在实际应用中：
+        # 如果确定张量一定是连续的，用 view 和 reshape 性能都一样
+        # 如果不确定是否连续，用 reshape 更安全，而且代码更简洁
+        # 性能差异通常很小，除非在非常关键的性能场景下，否则这点差异基本可以忽略
+        # 如果真的对性能特别敏感，可以考虑重新设计算法避免需要进行 transpose 操作。因为真正的性能开销主要来自必要的 transpose 操作，而不是 reshape 与 view 的选择。
+        
+        # contiguous() 是复制操作，不是移动。它的工作原理是：
+        # 创建一个新的内存空间
+        # 将原始数据按照新的内存布局复制到这个新空间中
+        # 返回指向这个新内存空间的张量
+        
+        # 这就是为什么有时候在性能敏感的场景下，需要仔细考虑是否真的需要调用 contiguous()。如果可能的话，最好在设计算法时就避免会导致非连续内存布局的操作。
+        # 但也要注意，即使 contiguous() 会导致数据复制，这个开销相比于神经网络中的计算开销（如矩阵乘法）通常是很小的，所以在大多数情况下不需要过度优化这一点。
+        context = context.transpose(1, 2).reshape(batch_size, seq_length, embed_dim)
 
         # Final linear projection
         output = self.out_proj(context)
