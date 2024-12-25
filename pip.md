@@ -113,3 +113,41 @@ conda config --show channels
 conda config --show-sources
 ```
 
+# 在 Linux 环境下修改 pip 的缓存地址通常涉及修改 pip 的配置文件或者环境变量。在这里，我将介绍两种方法来实现这一目的：
+ 
+### 方法一：修改 pip 配置文件
+ 
+1. 打开 pip 的配置文件 `pip.conf` 或 `pip.ini`，该文件通常位于以下位置之一：
+   - 用户级配置文件：`~/.config/pip/pip.conf` 或 `~/.pip/pip.conf`
+   - 全局配置文件：`/etc/pip.conf` 或 `/etc/pip/pip.conf`
+ 
+2. 如果文件不存在，则创建该文件。在配置文件中添加如下内容来修改 pip 的缓存地址：
+   ```
+   [global]
+   cache-dir = /path/to/your/cache/directory
+   ```
+ 
+3. 将 `/path/to/your/cache/directory` 替换为你想要设置的新缓存目录路径。
+ 
+### 方法二：设置环境变量
+ 
+1. 打开 shell 配置文件，如 `~/.bashrc`、`~/.bash_profile` 或 `~/.zshrc`，根据你使用的 shell 不同而有所不同。
+ 
+2. 在文件末尾添加以下行来设置 pip 缓存目录的环境变量：
+   ```
+   export PIP_CACHE_DIR=/path/to/your/cache/directory
+   ```
+ 
+3. 保存文件并执行以下命令使更改生效：
+   ```bash
+   source ~/.bashrc
+   ```
+ 
+4. 将 `/path/to/your/cache/directory` 替换为你想要设置的新缓存目录路径。
+ 
+### 原理：
+ 
+- 当你运行 `pip` 命令时，pip 会首先查找配置文件中的缓存目录设置，如果找到了就使用该设置的缓存目录；如果没有找到，pip 将会使用默认的缓存目录。
+- 通过修改配置文件或设置环境变量，你可以指定 pip 使用的缓存目录，从而改变 pip 在下载和缓存包时使用的目录。
+ 
+通过这两种方法中的任何一种，你可以修改 pip 的缓存地址，使其使用你指定的缓存目录来存储下载的包，而不是使用默认的缓存目录。
