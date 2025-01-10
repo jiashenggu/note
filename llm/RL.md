@@ -6,7 +6,9 @@ DPO、ReMax、PPO、GRPO到XDPO的解析：
 https://zhuanlan.zhihu.com/p/679904863
 
 GAE：
+
 https://chatgpt.com/share/67812c3d-9c14-8008-9976-643af6c5517d
+
 在强化学习 (Reinforcement Learning, RL) 中，**value**、**advantage** 和 **return** 是核心概念，它们之间有着紧密的关系，具体如下：
 
 ---
