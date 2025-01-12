@@ -7,6 +7,9 @@ DPO、ReMax、PPO、GRPO到XDPO的解析：
 
 https://zhuanlan.zhihu.com/p/679904863
 
+PPO:  
+https://chatgpt.com/share/6783bb17-c23c-8008-931d-aa82b0e0a535
+
 GAE：
 
 https://chatgpt.com/share/67812c3d-9c14-8008-9976-643af6c5517d
