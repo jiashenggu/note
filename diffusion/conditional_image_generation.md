@@ -2,6 +2,10 @@ controlnet和IP-Adapter都是AI图像生成中的条件控制方法,但它们有
 
 主要差异:
 
+条件输入  
+下图左边是 IP-Adapter，条件输入可以和基础输入、最终输出的大小不一致  
+下图右边是 ControlNet，条件输入需要和最终输出的大小保持 pixel-level 的一致  
+
 架构设计  
 ControlNet是在diffusion模型backbone上额外添加条件控制网络  
 IP-Adapter是在cross-attention层添加额外的条件嵌入  
