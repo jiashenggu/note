@@ -23,3 +23,5 @@ implement NN library with numpy
 implement Kvcache
 
 implement different sampling methods
+
+sequence parallel/context parallel: https://www.mltalks.com/posts/1017283893/
