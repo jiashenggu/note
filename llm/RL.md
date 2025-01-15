@@ -1,14 +1,94 @@
-大模型面经答案—强化学习：理论解释与讲解
+## 大模型面经答案—强化学习：理论解释与讲解
 
 https://developer.aliyun.com/article/1373044
 
 
-DPO、ReMax、PPO、GRPO到XDPO的解析：
+## DPO、ReMax、PPO、GRPO到XDPO的解析：
 
 https://zhuanlan.zhihu.com/p/679904863
 
-PPO:  
+## PPO:  
 https://chatgpt.com/share/6783bb17-c23c-8008-931d-aa82b0e0a535
+
+## Policy Loss和Value Loss
+在强化学习中的 **Proximal Policy Optimization (PPO)** 算法中，**policy loss** 和 **value loss** 是两个主要的损失函数，分别对应策略网络（Policy Network）和价值网络（Value Network）的优化目标。
+
+---
+
+### 1. **Policy Loss**
+
+**Policy Loss** 的目标是优化策略网络，使得策略能够选择更优的动作来最大化长期回报。它计算的是新策略和旧策略的相对变化，以及策略对优势函数的提升。
+
+#### 核心思想
+PPO 通过裁剪的方式，限制策略更新的幅度，避免策略变得过于激进，影响训练的稳定性。
+
+#### 数学公式
+假设：
+- \( \pi_\theta \) 是当前策略（新策略）。
+- \( \pi_{\text{old}} \) 是旧策略。
+- \( r_t = \frac{\pi_\theta(a_t | s_t)}{\pi_{\text{old}}(a_t | s_t)} \) 是策略概率比率。
+- \( A_t \) 是优势函数。
+
+PPO 的 policy loss 定义为：
+\[
+\mathcal{L}_{\text{policy}} = -\mathbb{E} \left[ \min \left( r_t A_t, \text{clip}(r_t, 1-\epsilon, 1+\epsilon) A_t \right) \right]
+\]
+
+- **第一项 \( r_t A_t \)**：
+  直接使用策略概率比率 \( r_t \) 放大或缩小优势函数 \( A_t \)。
+  
+- **第二项裁剪项**：
+  将 \( r_t \) 限制在 \( [1-\epsilon, 1+\epsilon] \) 的范围内，防止策略更新过大。
+
+- **取最小值**：
+  PPO 选择较保守的更新幅度，避免过大的策略偏移。
+
+#### 总结
+**Policy Loss** 衡量策略网络输出动作概率与旧策略的偏差，同时考虑动作的优势值，目的是调整策略使其优先选择高优势动作。
+
+---
+
+### 2. **Value Loss**
+
+**Value Loss** 的目标是优化价值网络，使其能够准确估计状态的价值（即长期回报的期望）。
+
+#### 核心思想
+价值网络的任务是通过回归，逼近实际的目标回报 \( G_t \) 或 TD 目标 \( V_{\text{target}} \)。
+
+#### 数学公式
+假设：
+- \( V_\theta(s_t) \) 是当前价值网络对状态 \( s_t \) 的估计值。
+- \( V_{\text{target}} \) 是目标值，通常是由实际回报 \( G_t \) 或 TD 目标计算得出。
+
+Value Loss 通常定义为均方误差（MSE）：
+\[
+\mathcal{L}_{\text{value}} = \mathbb{E} \left[ \left( V_\theta(s_t) - V_{\text{target}} \right)^2 \right]
+\]
+
+#### 目标
+- 减小估计值 \( V_\theta(s_t) \) 与目标值 \( V_{\text{target}} \) 之间的误差，使得价值网络的预测更准确。
+
+---
+
+### 3. **Policy Loss 和 Value Loss 的区别**
+
+| **损失函数**   | **作用**                                                                                  | **优化目标**                                                                                           | **更新的网络**      |
+|-----------------|------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|---------------------|
+| **Policy Loss** | 用于优化策略网络，使其选择能够最大化长期回报的动作                                           | 最大化 \( r_t A_t \)，同时限制 \( r_t \) 的变化范围，避免策略更新过大                                     | 策略网络（Policy Network） |
+| **Value Loss**  | 用于优化价值网络，使其能够准确估计每个状态的价值                                             | 减小 \( V_\theta(s_t) \) 与 \( V_{\text{target}} \) 的差距                                               | 价值网络（Value Network）   |
+
+---
+
+### PPO 中两者的结合
+在 PPO 中，最终的损失函数是两个部分的加权和，通常形式为：
+\[
+\mathcal{L}_{\text{PPO}} = \mathcal{L}_{\text{policy}} + c_1 \mathcal{L}_{\text{value}} + c_2 \mathcal{L}_{\text{entropy}}
+\]
+
+- \( \mathcal{L}_{\text{policy}} \)：策略损失。
+- \( \mathcal{L}_{\text{value}} \)：价值损失。
+- \( \mathcal{L}_{\text{entropy}} \)：熵正则化项，鼓励策略保持一定的探索性。
+- \( c_1 \) 和 \( c_2 \)：超参数，用于调整三者的相对重要性。
 
 GAE：
 
