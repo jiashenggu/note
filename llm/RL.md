@@ -13,7 +13,65 @@ https://chatgpt.com/share/6783bb17-c23c-8008-931d-aa82b0e0a535
 GAE：
 
 https://chatgpt.com/share/67812c3d-9c14-8008-9976-643af6c5517d
+```python
+    @torch.no_grad()
+    def get_advantages_and_returns(
+        self,
+        values: torch.Tensor,
+        rewards: torch.Tensor,
+        action_mask: torch.Tensor,
+        gamma: float,
+        lambd: float,
+    ) -> Tuple[torch.Tensor, torch.Tensor]:
+        """Function that computes advantages and returns from rewards and values.
+        Calculated as in the original PPO paper: https://arxiv.org/abs/1707.06347
+        Note that rewards may include a KL divergence loss term.
 
+        Advantages looks like this:
+        Adv1 =  R1 + γ * λ * R2     + γ^2 * λ^2 * R3       + ...
+              - V1 + γ * (1 - λ) V2 + γ^2 * λ * (1 - λ) V3 + ...
+
+        Returns looks like this:
+        Ret1 =  R1 + γ * λ * R2     + γ^2 * λ^2 * R3       + ...
+                   + γ * (1 - λ) V2 + γ^2 * λ * (1 - λ) V3 + ...
+
+        Input:
+        - values: Tensor of shape (batch_size, response_size)
+        - rewards: Tensor of shape (batch_size, response_size)
+
+        Output:
+        - advantages: Tensor of shape (batch_size, response_size)
+        - returns: Tensor of shape (batch_size, response_size)
+        """
+        if isinstance(values, list):
+            # packing samples
+            # TODO: this is slow...
+            advantages = []
+            returns = []
+            for v, r in zip(values, rewards):
+                adv, ret = self.get_advantages_and_returns(v.unsqueeze(0), r.unsqueeze(0), action_mask, gamma, lambd)
+                advantages.append(adv.squeeze(0))
+                returns.append(ret.squeeze(0))
+            return advantages, returns
+
+        lastgaelam = 0
+        advantages_reversed = []
+        response_length = rewards.size(1)
+
+        # Mask invalid responses
+        if action_mask is not None:
+            values = action_mask * values
+            rewards = action_mask * rewards
+
+        for t in reversed(range(response_length)):
+            nextvalues = values[:, t + 1] if t < response_length - 1 else 0.0
+            delta = rewards[:, t] + gamma * nextvalues - values[:, t]
+            lastgaelam = delta + gamma * lambd * lastgaelam
+            advantages_reversed.append(lastgaelam)
+        advantages = torch.stack(advantages_reversed[::-1], dim=1)
+        returns = advantages + values
+        return advantages.detach(), returns
+```
 在强化学习 (Reinforcement Learning, RL) 中，**value**、**advantage** 和 **return** 是核心概念，它们之间有着紧密的关系，具体如下：
 
 ---
