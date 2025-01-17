@@ -25,7 +25,7 @@
     - Each frame requires approximately **2 seconds** of computation.
     - A **6-minute 30-second video** can be fully processed within the framework.
 
-employ z- loss to stabilize training.
+employ z-loss to stabilize training.
 ![442cfa0a-60ae-4487-b2c4-11837eb93e35](https://github.com/user-attachments/assets/f49bbcb1-55fe-467a-86af-0502f204fdc7)
 
 ![5009d76e-354e-416f-af32-89d860ddf321](https://github.com/user-attachments/assets/8cb5f75f-7559-46e3-8cea-d1af044f71eb)
