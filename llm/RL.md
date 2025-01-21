@@ -29,21 +29,21 @@ PPO 通过裁剪的方式，限制策略更新的幅度，避免策略变得过�
 
 #### 数学公式
 假设：
-- \( \pi_\theta \) 是当前策略（新策略）。
-- \( \pi_{\text{old}} \) 是旧策略。
-- \( r_t = \frac{\pi_\theta(a_t | s_t)}{\pi_{\text{old}}(a_t | s_t)} \) 是策略概率比率。
-- \( A_t \) 是优势函数。
+- $\( \pi_\theta \)$ 是当前策略（新策略）。
+- $\( \pi_{\text{old}} \)$ 是旧策略。
+- $\( r_t = \frac{\pi_\theta(a_t | s_t)}{\pi_{\text{old}}(a_t | s_t)} \)$ 是策略概率比率。
+- $\( A_t \)$ 是优势函数。
 
 PPO 的 policy loss 定义为：
-\[
+$$\[
 \mathcal{L}_{\text{policy}} = -\mathbb{E} \left[ \min \left( r_t A_t, \text{clip}(r_t, 1-\epsilon, 1+\epsilon) A_t \right) \right]
-\]
+\]$$
 
 - **第一项 \( r_t A_t \)**：
-  直接使用策略概率比率 \( r_t \) 放大或缩小优势函数 \( A_t \)。
+  直接使用策略概率比率 $\( r_t \)$ 放大或缩小优势函数 $\( A_t \)$。
   
 - **第二项裁剪项**：
-  将 \( r_t \) 限制在 \( [1-\epsilon, 1+\epsilon] \) 的范围内，防止策略更新过大。
+  将 $\( r_t \)$ 限制在 $\( [1-\epsilon, 1+\epsilon] \)$ 的范围内，防止策略更新过大。
 
 - **取最小值**：
   PPO 选择较保守的更新幅度，避免过大的策略偏移。
@@ -58,20 +58,19 @@ PPO 的 policy loss 定义为：
 **Value Loss** 的目标是优化价值网络，使其能够准确估计状态的价值（即长期回报的期望）。
 
 #### 核心思想
-价值网络的任务是通过回归，逼近实际的目标回报 \( G_t \) 或 TD 目标 \( V_{\text{target}} \)。
+价值网络的任务是通过回归，逼近实际的目标回报 $\( G_t \)$ 或 TD 目标 $\( V_{\text{target}} \)$。
 
 #### 数学公式
 假设：
-- \( V_\theta(s_t) \) 是当前价值网络对状态 \( s_t \) 的估计值。
-- \( V_{\text{target}} \) 是目标值，通常是由实际回报 \( G_t \) 或 TD 目标计算得出。
+- $\( V_\theta(s_t) \)$ 是当前价值网络对状态 $\( s_t \)$ 的估计值。
+- $\( V_{\text{target}} \)$ 是目标值，通常是由实际回报 $\( G_t \)$ 或 TD 目标计算得出。
 
 Value Loss 通常定义为均方误差（MSE）：
-\[
-\mathcal{L}_{\text{value}} = \mathbb{E} \left[ \left( V_\theta(s_t) - V_{\text{target}} \right)^2 \right]
-\]
+
+$$L_{\text{value}} = E \left[ \left( V_\theta(s_t) - V_{\text{target}} \right)^2 \right]$$
 
 #### 目标
-- 减小估计值 \( V_\theta(s_t) \) 与目标值 \( V_{\text{target}} \) 之间的误差，使得价值网络的预测更准确。
+- 减小估计值 $\( V_\theta(s_t) \)$ 与目标值 $\( V_{\text{target}} \)$ 之间的误差，使得价值网络的预测更准确。
 
 ---
 
