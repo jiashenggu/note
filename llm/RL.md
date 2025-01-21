@@ -3,6 +3,11 @@
 https://developer.aliyun.com/article/1373044
 
 
+## DPO公式
+
+$$
+-\log\sigma(\beta\log \frac{\pi_{\theta}(y_w|x)}{\pi_{ref}(y_w|x)} - \beta\log \frac{\pi_{\theta}(y_l|x)}{\pi_{ref}(y_l|x)})
+$$
 ## DPO、ReMax、PPO、GRPO到XDPO的解析：
 
 https://zhuanlan.zhihu.com/p/679904863
