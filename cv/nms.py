@@ -44,10 +44,16 @@ def nms(bboxes, scores, iou_thresh):
     return bboxes, scores
 
 
-if __name__ == '__main__':
-    raw_img = cv2.imread('test.png')
+if __name__ == "__main__":
+    raw_img = cv2.imread("test.png")
     # 这里为了编码方便，将检测的结果直接作为变量
-    bboxes = [[183, 625, 269, 865], [197, 603, 296, 853], [190, 579, 295, 864], [537, 507, 618, 713], [535, 523, 606, 687]]
+    bboxes = [
+        [183, 625, 269, 865],
+        [197, 603, 296, 853],
+        [190, 579, 295, 864],
+        [537, 507, 618, 713],
+        [535, 523, 606, 687],
+    ]
     confidences = [0.7, 0.9, 0.95, 0.9, 0.6]
     # 未经过nms的原始检测结果
     img = raw_img.copy()

@@ -55,7 +55,7 @@ def dpo_loss(
 
 # write a test case for the above function
 def test_dpo_loss():
-    """ Test the DPO loss function """
+    """Test the DPO loss function"""
     chosen_logps = torch.tensor([0.9, 0.8, 0.7])
     rejected_logps = torch.tensor([0.1, 0.2, 0.3])
     ref_chosen_logps = torch.tensor([0.8, 0.7, 0.6])
