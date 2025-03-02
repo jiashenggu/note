@@ -1,4 +1,4 @@
-
+## [qwenvl 以及qwenvl 2 模型架构理解](https://blog.csdn.net/Sansipi/article/details/144402848)
 # [24年下半年较新的VLM架构](https://zhuanlan.zhihu.com/p/11503653276)
 
 ## AnyRes 
