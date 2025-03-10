@@ -1,3 +1,20 @@
+deepseekmoe: 
+1. more experts, smaller experts
+2. shared experts
+
+   
+deepseek v3:
+1. auxiliary free, add bias in router
+2. a multi-token prediction training objective
+
+MOE模型的过去、现状和未来是怎样的？ - 甜菜欣欣的回答 - 知乎
+https://www.zhihu.com/question/664040671/answer/62344159797
+
+1. 你们发现混合专家模型需要更低的学习率和更大的批大小，因为专家是稀疏激活的。每个专家接收到的 token 更少，也就是在训练时批大小更小，所以它就需要更大的批大小。
+2. 负载平衡是为了确保 MoE 可以把 token 平均分配给各个专家。我们发现负载平衡越少，效果反而越好。
+   
+experiments summary
+
 1. **Gating Mechanisms and Auxiliary Loss**:
    - **Baseline**: The softmax gating mechanism with expert-level auxiliary loss (aux_loss) was the starting point for comparison.
    - **Sigmoid Gating + Auxiliary Loss-Free Training**:
