@@ -24,6 +24,4 @@ implement Kvcache
 
 implement different sampling methods
 
-sequence parallel/context parallel: https://www.mltalks.com/posts/1017283893/
-
 中间激活值显存分析: https://mingchao.wang/4KTgtnFc/
