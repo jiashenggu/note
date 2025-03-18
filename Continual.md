@@ -1,0 +1,3 @@
+遗忘在继续预训练中可能是虚假的，模型只是忘了如何对齐到对应的知识
+可以通过冻结最后一层减缓遗忘
+Spurious Forgetting in Continual Learning of Language Models
