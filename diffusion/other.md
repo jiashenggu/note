@@ -1,0 +1,1 @@
+QK normalization:一些技术报告指出，大型transformer在训练时，有时会出现其attention score几乎变成one-hot，然后导致训练崩溃。所以一种缓解的办法就是对Q和K做归一化
