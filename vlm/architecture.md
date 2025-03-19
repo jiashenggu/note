@@ -1,3 +1,13 @@
+只有qwen1用了cross attention在merger/adapter里
+
+qwen2/2.5都用的MLP
+
+qwen2的vision encoder用了2d rope
+
+qwen2.5的vision encoder用了window attention
+
+qwen2.5的merger，将空间上相邻的四个patch特征拼接在一起通过双层MLP
+
 ## [qwenvl 以及qwenvl 2 模型架构理解](https://blog.csdn.net/Sansipi/article/details/144402848)
 # [24年下半年较新的VLM架构](https://zhuanlan.zhihu.com/p/11503653276)
 
