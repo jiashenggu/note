@@ -8,6 +8,20 @@ https://developer.aliyun.com/article/1373044
 $$
 -\log\sigma(\beta\log \frac{\pi_{\theta}(y_w|x)}{\pi_{ref}(y_w|x)} - \beta\log \frac{\pi_{\theta}(y_l|x)}{\pi_{ref}(y_l|x)})
 $$
+
+
+转换为最大化
+
+$$
+\log\sigma(\beta\log \frac{\pi_{\theta}(y_w|x)}{\pi_{\theta}(y_w|x)} - \beta\log \frac{\pi_{ref}(y_l|x)}{\pi_{ref}(y_l|x)})
+$$
+
+从这个公式可以看出只要训练的策略生成正样本和负样本的概率的比值高于参考策略就可以降低损失。如果参考模型和训练策略生成正负样本的比值分别为 0.5/0.25=2， 0.3/0.1=3，此时损失也会下降，但是生成正样本的概率反而下降了。
+
+既然生成正负样本的概率都降低了，那生成什么的概率提高了呢？答案是偏好数据集分布外的输出。模型可能会输出一些不包含在偏好数据集的奇奇怪怪的输出，比如问题是“意大利面应该拌什么”，数据集正样本是“蕃茄肉酱”，负样本是“油泼辣子”，DPO 优化后却可能回应“意大利面就应该拌42号混凝土”。所以 DPO 对数据集要求很高，高质量的偏好数据集上进行 DPO 对齐才能取得好效果。
+
+[简单例子说明 DPO 为什么可能表现不好](https://zhuanlan.zhihu.com/p/18603295907)
+
 ## DPO、ReMax、PPO、GRPO到XDPO的解析：
 
 https://zhuanlan.zhihu.com/p/679904863
