@@ -1,3 +1,5 @@
+[https://github.com/huggingface/trl/blob/main/docs/source/how_to_train.md](https://github.com/huggingface/trl/blob/main/docs/source/how_to_train.md)
+
 ## DAPO（Decoupled Clip and Dynamic sAmpling Policy Optimization）
 ### 移除KL散度
 
