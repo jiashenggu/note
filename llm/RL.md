@@ -1,3 +1,13 @@
+## DAPO（Decoupled Clip and Dynamic sAmpling Policy Optimization）
+### 移除KL散度
+
+### 提高上限：Clip-Higher
+### 动态采样
+过滤掉准确率为1和0的提示，确保每个批次中的提示都具有有效的梯度信号。实验表明，动态采样不仅提升了训练效率，还加速了模型的收敛。
+### Token-Level策略梯度损失
+传统的GRPO算法采用样本级损失计算，导致长响应中的token对整体损失的贡献较低。DAPO引入了Token-Level策略梯度损失，确保长序列中的每个token都能对梯度更新产生同等影响。这一改进不仅提升了训练稳定性，还避免了过长响应中的低质量模式。
+### 过长奖励整形
+
 ## 大模型面经答案—强化学习：理论解释与讲解
 
 https://developer.aliyun.com/article/1373044
