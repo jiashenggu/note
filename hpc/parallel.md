@@ -57,3 +57,5 @@ https://www.zhihu.com/collection/910140491
 
 
 sequence parallel/context parallel: https://www.mltalks.com/posts/1017283893/
+
+[Megatron-LM技术讲解](https://zhuanlan.zhihu.com/p/702532131)
