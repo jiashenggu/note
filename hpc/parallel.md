@@ -1,3 +1,8 @@
+# DeepSpeed ZERO
+
+https://blog.csdn.net/zmj1582188592/article/details/135668292
+
+
 CP并行与Ring Attention类似，但是提供了新的OSS与FlashAttention版本，也去除了low-triangle causal masking的冗余计算。
 
 先回顾一下Megtron的SP(Sequence Parallelism)操作，SP完成sequence维度的并行，覆盖操作包括LayerNorm、Dropout、FC，但不能切分self-attention模块。如下图所示在SP/TP的组合中案例中，self-attention计算前聚合（all-gather）了sequence的内容。
