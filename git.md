@@ -93,3 +93,5 @@ git push --set-upstream upstream dev
 这个命令会将本地的 dev 分支推送到远程仓库的 dev 分支，并将该 dev 分支设置为该本地 dev 分支的上游分支。此后，只需执行简便的 `git push` 或 `git pull` 命令即可推送或更新。
 
 
+### 通过环境变量临时指定ssh key
+GIT_SSH_COMMAND='ssh -i ~/.ssh/custom_id_rsa' git clone git@github.com:user/repo.git
