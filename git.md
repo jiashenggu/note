@@ -4,6 +4,9 @@
 git config --global user.name "jiashenggu"
 git config --global user.email "jiashengguwen@gmail.com"
 ```
+```
+git config --list
+```
 
 # generate ssh key
 ```
