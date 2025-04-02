@@ -41,10 +41,10 @@
         <mxCell id="-XIXAdpVKstCxnmC-5fp-1" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;评测结果分析&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="520" y="260" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="-XIXAdpVKstCxnmC-5fp-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" edge="1">
+        <mxCell id="-XIXAdpVKstCxnmC-5fp-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" edge="1" target="XO_zJswePq4c_CVxiwiD-2" source="-XIXAdpVKstCxnmC-5fp-3">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="740" y="410" as="sourcePoint" />
-            <mxPoint x="100" y="320" as="targetPoint" />
+            <mxPoint x="740" y="545" as="sourcePoint" />
+            <mxPoint x="110" y="370" as="targetPoint" />
             <Array as="points">
               <mxPoint x="740" y="460" />
               <mxPoint x="100" y="460" />
