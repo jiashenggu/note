@@ -1,12 +1,18 @@
-删除指定文件名后缀
+## 删除指定文件名后缀
 ```bash
 for file in *_42.jpg; do mv "$file" "${file/_42.jpg/.jpg}"; done
 ```
-查看后台运行的进程。
+## 查看后台运行的进程。
 ```bash
 ps aux | grep [进程名]
 ```
-找到卡号对应的进程
+
+## 安装工具psmisc，为了使用fuser
+```
+apt-get update
+apt-get install psmisc
+```
+### 找到卡号对应的进程
 ```bash
 fuser -v /dev/nvidia*
 ```
@@ -28,6 +34,10 @@ PID：进程ID。
 ACCESS：访问模式（例如，F表示文件打开，R表示读，W表示写）。
 COMMAND：使用该文件或设备的进程名称。
 
+## 杀死目标进程
+```bash
+kill -9 {processId}
+```
 # tar
 
 ```bash
