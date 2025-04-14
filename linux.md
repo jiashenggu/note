@@ -108,3 +108,9 @@ tar -ztf archive.tar.gz | sed -e 's/\/.*//' | sort -u
 cat /etc/issue
 ```
 
+## linux下查看当前用户、所有用户的方法
+直接查看/etc/passwd 文件后面第二个冒号的值大于1000时，这个就是一个用户
+```bash
+/etc/passwd
+```
+[https://blog.csdn.net/tsummer2010/article/details/104427776](https://blog.csdn.net/tsummer2010/article/details/104427776)
