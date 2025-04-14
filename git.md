@@ -106,4 +106,6 @@ git push --set-upstream upstream dev
 
 
 ### 通过环境变量临时指定ssh key
+```bash
 GIT_SSH_COMMAND='ssh -i ~/.ssh/custom_id_rsa' git clone git@github.com:user/repo.git
+```
