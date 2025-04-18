@@ -1,5 +1,8 @@
 ### 注意：清华镜像源中的torch只有CPU版本的，因此pip自动安装的pytorch都是cpu
-
+# 指定cuda版本
+```bash
+pip install torch==2.4.0 torchvision==0.19.0 torchaudio==2.4.0 --index-url https://mirrors.aliyun.com/pytorch-wheels/cu118 -i https://mirrors.aliyun.com/pypi/simple
+```
 # 单次
 ```bash
 pip install -i https://mirrors.aliyun.com/pypi/simple torch
