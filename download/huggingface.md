@@ -60,7 +60,7 @@ print("Dataset download complete!")
 ```
 ### Command:
 ```bash
-pip install -U huggingface_hub
+pip install -U huggingface_hub[cli]
 pip install -U hf-transfer
 export HF_HUB_ENABLE_HF_TRANSFER=1
 ```
