@@ -1,3 +1,47 @@
+#### 总核数 = 物理CPU个数 X 每颗物理CPU的核数 
+#### 总逻辑CPU数 = 物理CPU个数 X 每颗物理CPU的核数 X 超线程数
+
+## 查看物理CPU个数
+cat /proc/cpuinfo| grep "physical id"| sort| uniq| wc -l
+
+## 查看每个物理CPU中core的个数(即核数)
+cat /proc/cpuinfo| grep "cpu cores"| uniq
+
+## 查看逻辑CPU的个数
+cat /proc/cpuinfo| grep "processor"| wc -l
+
+## 查看CPU信息（型号）
+cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c
+ 
+## 查看内存信息
+cat /proc/meminfo
+
+## 如何查看Linux 内核
+uname -a
+cat /proc/version
+
+## 查看当前操作系统是ubuntu还是centos
+```bash
+cat /etc/issue
+```
+ 
+## 查看机器型号（机器硬件型号）
+
+dmidecode | grep "Product Name"
+
+## 如何查看linux 系统版本
+cat /etc/redhat-release
+lsb_release -a
+cat  /etc/issue
+ 
+## 如何查看linux系统和CPU型号，类型和大小
+cat /proc/cpuinfo
+
+##如何查看linux 系统内存大小的信息，可以查看总内存，剩余内存，可使用内存等信息  
+cat /proc/meminfo
+
+
+
 ## 删除指定文件名后缀
 ```bash
 for file in *_42.jpg; do mv "$file" "${file/_42.jpg/.jpg}"; done
@@ -113,10 +157,7 @@ tar -ztf archive.tar.gz | sed -e 's/\/.*//' | sort -u
 
 这些方法都能让你只看到tar文件的顶层目录结构。选择哪种方法主要取决于你的个人偏好和系统上可用的工具。
 
-## 查看当前操作系统是ubuntu还是centos
-```bash
-cat /etc/issue
-```
+
 
 ## linux下查看当前用户、所有用户的方法
 直接查看/etc/passwd 文件后面第二个冒号的值大于1000时，这个就是一个用户
