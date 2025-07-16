@@ -271,7 +271,93 @@ GAE 的完整公式主要包括：
 GAE 提供了一种灵活的方法来平滑优势估计，\(\lambda\) 和 \(\gamma\) 共同决定了它对短期和长期奖励的权衡。
 
 https://chatgpt.com/share/67812c3d-9c14-8008-9976-643af6c5517d
+
 ```python
+class PolicyLoss(nn.Module):
+    """
+    Policy Loss for PPO
+    """
+
+    def __init__(
+        self,
+        clip_eps_low: float = 0.2,
+        clip_eps_high: float = 0.2,
+        dual_clip: float = None,
+        token_level_loss: bool = True,
+    ) -> None:
+        super().__init__()
+        self.clip_eps_low = clip_eps_low
+        self.clip_eps_high = clip_eps_high
+        self.token_level_loss = token_level_loss
+        self.dual_clip = dual_clip
+
+        # Dual-clip PPO: https://arxiv.org/pdf/1912.09729
+        if dual_clip is not None:
+            assert dual_clip > 1.0, f"dual_clip must be > 1.0, got {dual_clip}"
+
+    def forward(
+        self,
+        log_probs: torch.Tensor,
+        old_log_probs: torch.Tensor,
+        advantages: torch.Tensor,
+        action_mask: Optional[torch.Tensor] = None,
+    ) -> torch.Tensor:
+        ratio = (log_probs - old_log_probs).exp()
+        surr1 = ratio * advantages
+        surr2 = ratio.clamp(1 - self.clip_eps_low, 1 + self.clip_eps_high) * advantages
+
+        if self.dual_clip is None:
+            # Standard PPO
+            loss = -torch.min(surr1, surr2)
+        else:
+            # Standard PPO clipping
+            clip1 = torch.min(surr1, surr2)
+            # Dual-clip: additional lower bound for negative advantages
+            clip2 = torch.max(clip1, self.dual_clip * advantages)
+            # Apply dual-clip: use clip2 for negative advantages, clip1 for positive advantages
+            loss = -torch.where(advantages < 0, clip2, clip1)
+
+        loss = (
+            masked_mean(loss, action_mask, dim=None)
+            if self.token_level_loss
+            else masked_mean(loss, action_mask, dim=-1).mean()
+        )
+        clip_ratio = masked_mean(torch.lt(surr2, surr1).float(), action_mask, dim=None)
+        return loss, clip_ratio
+
+
+class ValueLoss(nn.Module):
+    """
+    Value Loss for PPO
+    """
+
+    def __init__(self, clip_eps: float = None, token_level_loss: bool = True) -> None:
+        super().__init__()
+        self.clip_eps = clip_eps
+        self.token_level_loss = token_level_loss
+
+    def forward(
+        self,
+        values: torch.Tensor,
+        old_values: torch.Tensor,
+        returns: torch.Tensor,
+        action_mask: Optional[torch.Tensor] = None,
+    ) -> torch.Tensor:
+        if self.clip_eps is not None:
+            values_clipped = old_values + (values - old_values).clamp(-self.clip_eps, self.clip_eps)
+            surr1 = (values_clipped - returns) ** 2
+            surr2 = (values - returns) ** 2
+            loss = torch.max(surr1, surr2)
+        else:
+            loss = (values - returns) ** 2
+
+        loss = (
+            masked_mean(loss, action_mask, dim=None)
+            if self.token_level_loss
+            else masked_mean(loss, action_mask, dim=-1).mean()
+        )
+        return 0.5 * loss
+
     @torch.no_grad()
     def get_advantages_and_returns(
         self,
