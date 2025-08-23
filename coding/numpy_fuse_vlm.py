@@ -38,7 +38,7 @@ def fuse_vlm(image: np.ndarray, prompt: str, seed: int = 42) -> np.ndarray:
         avg_chars = np.mean([len(token) for token in tokens])
         text_feature = np.array([avg_chars])
         # 归一化
-        abs_val /= np.abs(text_feature)
+        abs_val = np.abs(text_feature)
         if abs_val > 0:
             text_feature = text_feature / abs_val
     
