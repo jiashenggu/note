@@ -9,7 +9,6 @@ class ReLU:
     def backward(self, grad_output):
         return grad_output * (self.input > 0)
 
-
 # 线性层
 class Linear:
     def __init__(self, input_dim, output_dim):
@@ -29,6 +28,17 @@ class Linear:
         self.W -= lr * self.grad_W
         self.b -= lr * self.grad_b
 
+class SoftmaxCrossEntropyLoss:
+    def forward(self, y_pred, y_true):
+        # Add a small epsilon for numerical stability
+        y_pred_clipped = np.clip(y_pred, 1e-8, 1 - 1e-8)
+        # Calculate loss
+        loss = -np.mean(np.sum(y_true * np.log(y_pred_clipped), axis=1))
+        return loss
+
+    def backward(self, y_pred, y_true):
+        # Gradient of Softmax + Cross-Entropy
+        return y_pred - y_true
 
 class MLP:
     def __init__(self, input_dim, hidden_dim, output_dim, lr=0.01):
@@ -49,10 +59,9 @@ class MLP:
         self.output = self.softmax(self.z2)
         return self.output
 
-    def backward(self, y):
-        # 输出层梯度
-        dz2 = self.output - y  # softmax的导数
-        da1 = self.linear2.backward(dz2)
+    def backward(self, grad_output):
+
+        da1 = self.linear2.backward(grad_output)
 
         # 隐藏层梯度
         dz1 = self.activation.backward(da1)
@@ -81,12 +90,15 @@ if __name__ == "__main__":
 
     # 训练1000轮
     for i in range(1000):
+        loss_fn = SoftmaxCrossEntropyLoss()
         pred = mlp.forward(X)
-        mlp.backward(y_onehot)
+        loss = loss_fn.forward(pred, y_onehot)
+        grad = loss_fn.backward(pred, y_onehot)
+        mlp.backward(grad)
         mlp.update()
 
         if i % 100 == 0:
-            loss = -np.mean(np.sum(y_onehot * np.log(pred + 1e-8), axis=1))
+            loss = loss_fn.forward(pred, y_onehot)
             print(f"Iteration {i}, Loss: {loss:.4f}")
 
     # 预测并计算准确率
