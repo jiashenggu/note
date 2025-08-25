@@ -13,7 +13,7 @@ class ReLU:
 # 线性层
 class Linear:
     def __init__(self, input_dim, output_dim):
-        self.W = np.random.randn(input_dim, output_dim) * np.sqrt(2.0 / (input_dim + output_dim))
+        self.W = np.random.randn(input_dim, output_dim) * np.sqrt(2.0 / input_dim)
         self.b = np.zeros(output_dim)
 
     def forward(self, x):
