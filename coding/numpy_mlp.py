@@ -1,17 +1,7 @@
 import numpy as np
 
-
-# 激活函数基类
-class Activation:
-    def forward(self, x):
-        pass
-
-    def backward(self, grad_output):
-        pass
-
-
 # ReLU激活函数
-class ReLU(Activation):
+class ReLU:
     def forward(self, x):
         self.input = x
         return np.maximum(0, x)
@@ -23,7 +13,7 @@ class ReLU(Activation):
 # 线性层
 class Linear:
     def __init__(self, input_dim, output_dim):
-        self.W = np.random.randn(input_dim, output_dim) / np.sqrt(input_dim)
+        self.W = np.random.randn(input_dim, output_dim) * np.sqrt(2.0 / (input_dim + output_dim))
         self.b = np.zeros(output_dim)
 
     def forward(self, x):
