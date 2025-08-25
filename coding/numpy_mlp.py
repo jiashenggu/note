@@ -28,7 +28,7 @@ class Linear:
         self.W -= lr * self.grad_W
         self.b -= lr * self.grad_b
 
-class SoftmaxCrossEntropyLoss:
+class CrossEntropyLoss:
     def forward(self, y_pred, y_true):
         # Add a small epsilon for numerical stability
         y_pred_clipped = np.clip(y_pred, 1e-8, 1 - 1e-8)
