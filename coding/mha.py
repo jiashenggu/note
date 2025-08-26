@@ -17,6 +17,23 @@ class ScaledDotProductAttention(nn.Module):
         context = torch.matmul(attn, V)
         return context
 
+def create_causal_mask(seq_len):
+  """
+  创建一个因果注意力掩码。
+
+  Args:
+    seq_len: 序列长度。
+
+  Returns:
+    一个形状为 (seq_len, seq_len) 的注意力掩码张量。
+  """
+  mask = torch.triu(torch.ones(seq_len, seq_len), diagonal=1).bool()
+  return mask
+
+# 示例
+sequence_length = 5
+causal_mask = create_causal_mask(sequence_length)
+print(causal_mask)
 
 class CustomMultiheadAttention(nn.Module):
     def __init__(self, embed_dim, num_heads, dropout=0.1):
@@ -97,7 +114,8 @@ def test_custom_multihead_attention():
     query = torch.randn(batch_size, seq_length, embed_dim)
     key = torch.randn(batch_size, seq_length, embed_dim)
     value = torch.randn(batch_size, seq_length, embed_dim)
-    attn_mask = torch.zeros(seq_length, seq_length).bool()
+
+    attn_mask = create_causal_mask(sequence_length)
 
     # 自定义的 MultiheadAttention
     custom_mha = CustomMultiheadAttention(embed_dim, num_heads, dropout=0.0)
