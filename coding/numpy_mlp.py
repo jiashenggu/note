@@ -28,80 +28,110 @@ class Linear:
         self.W -= lr * self.grad_W
         self.b -= lr * self.grad_b
 
-class CrossEntropyLoss:
-    def forward(self, y_pred, y_true):
-        # Add a small epsilon for numerical stability
-        y_pred_clipped = np.clip(y_pred, 1e-8, 1 - 1e-8)
-        # Calculate loss
+class SoftmaxCrossEntropyLoss:
+    def forward(self, logits, y_true):
+        """
+        Calculates stable softmax and cross-entropy loss.
+        logits: The raw output from the last linear layer (pre-activation).
+        y_true: The one-hot encoded true labels.
+        """
+        # Store for backward pass
+        self.y_true = y_true
+
+        # Log-sum-exp trick for numerical stability
+        max_logit = np.max(logits, axis=1, keepdims=True)
+        exp_logits = np.exp(logits - max_logit)
+        sum_exp_logits = np.sum(exp_logits, axis=1, keepdims=True)
+        
+        # Softmax probabilities
+        self.y_pred = exp_logits / sum_exp_logits
+        
+        # Clip probabilities to avoid log(0)
+        y_pred_clipped = np.clip(self.y_pred, 1e-8, 1 - 1e-8)
+
+        # Calculate cross-entropy loss
         loss = -np.mean(np.sum(y_true * np.log(y_pred_clipped), axis=1))
         return loss
 
-    def backward(self, y_pred, y_true):
-        # Gradient of Softmax + Cross-Entropy
-        return y_pred - y_true
+    def backward(self):
+        """
+        Calculates the gradient of the loss with respect to the logits.
+        The gradient is simply (softmax_output - true_labels).
+        """
+        return self.y_pred - self.y_true
 
 class MLP:
     def __init__(self, input_dim, hidden_dim, output_dim, lr=0.01):
-        # 初始化层
         self.linear1 = Linear(input_dim, hidden_dim)
         self.activation = ReLU()
         self.linear2 = Linear(hidden_dim, output_dim)
         self.lr = lr
 
     def forward(self, X):
-        # 第一层线性变换
-        self.z1 = self.linear1.forward(X)
-        # ReLU激活
-        self.a1 = self.activation.forward(self.z1)
-        # 第二层线性变换
-        self.z2 = self.linear2.forward(self.a1)
-        # softmax输出
-        self.output = self.softmax(self.z2)
-        return self.output
+        # First linear layer
+        z1 = self.linear1.forward(X)
+        # ReLU activation
+        a1 = self.activation.forward(z1)
+        # Second linear layer
+        logits = self.linear2.forward(a1) # Note: We now call this 'logits'
+        # Return the raw logits, DO NOT apply softmax here
+        return logits
 
     def backward(self, grad_output):
-
+        # Gradient from the output layer
         da1 = self.linear2.backward(grad_output)
-
-        # 隐藏层梯度
+        # Gradient through ReLU
         dz1 = self.activation.backward(da1)
+        # Gradient for the first layer
         self.linear1.backward(dz1)
 
     def update(self):
         self.linear1.update(self.lr)
         self.linear2.update(self.lr)
 
-    def softmax(self, x):
-        exp_x = np.exp(x - np.max(x, axis=1, keepdims=True))
-        return exp_x / np.sum(exp_x, axis=1, keepdims=True)
 
+# The Linear, ReLU classes remain the same.
 
-# 测试
+# Test
 if __name__ == "__main__":
-    # 生成随机数据
+    # Generate random data
     np.random.seed(0)
     X = np.random.randn(100, 2)
     y = np.array([1 if x1 + x2 > 0 else 0 for x1, x2 in X])
     y_onehot = np.zeros((y.shape[0], 2))
     y_onehot[np.arange(y.shape[0]), y] = 1
 
-    # 初始化并训练MLP
+    # Initialize MLP and the new combined loss function
     mlp = MLP(input_dim=2, hidden_dim=3, output_dim=2)
+    loss_fn = SoftmaxCrossEntropyLoss()
 
-    # 训练1000轮
+    # Train for 1000 epochs
     for i in range(1000):
-        loss_fn = SoftmaxCrossEntropyLoss()
-        pred = mlp.forward(X)
-        loss = loss_fn.forward(pred, y_onehot)
-        grad = loss_fn.backward(pred, y_onehot)
+        # --- FORWARD PASS ---
+        # 1. Get logits from the network
+        logits = mlp.forward(X)
+        # 2. Calculate loss using the combined function
+        loss = loss_fn.forward(logits, y_onehot)
+
+        # --- BACKWARD PASS ---
+        # 1. Get the initial gradient from the loss function
+        grad = loss_fn.backward()
+        # 2. Backpropagate the gradient through the network
         mlp.backward(grad)
+        # 3. Update weights
         mlp.update()
 
         if i % 100 == 0:
-            loss = loss_fn.forward(pred, y_onehot)
             print(f"Iteration {i}, Loss: {loss:.4f}")
 
-    # 预测并计算准确率
-    pred = np.argmax(mlp.forward(X), axis=1)
-    accuracy = np.mean(pred == y)
+    # --- PREDICTION ---
+    # For prediction, we still need to apply softmax to the final logits
+    def softmax(x):
+        exp_x = np.exp(x - np.max(x, axis=1, keepdims=True))
+        return exp_x / np.sum(exp_x, axis=1, keepdims=True)
+        
+    final_logits = mlp.forward(X)
+    predictions = np.argmax(softmax(final_logits), axis=1) # Apply softmax here for probabilities
+    
+    accuracy = np.mean(predictions == y)
     print(f"\nAccuracy: {accuracy:.4f}")
