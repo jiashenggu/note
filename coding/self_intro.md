@@ -1,4 +1,4 @@
-Hi, I'm Jiasheng Gu. At 01.ai, I built the end-to-end training pipeline for proprietary VLMs and LLMs. These include the 25B-A3.5B and 247B-A22B MoE models. All this was to create a generative AI video editing and mixing product from the scratch.
+Hi, I'm Jiasheng Gu. At 01.AI, I built the end-to-end training pipeline for proprietary VLMs and LLMs. These include the 25B-A3.5B and 247B-A22B MoE models. All this was used to create a generative AI video editing and mixing product from the scratch.
 
 My work covered the whole training process. First, I did continued pre-training on a 20-billion-token dataset using Megatron-LM. Then, I set up a two-stage fine-tuning process: SFT and DPO. This made the models better at understanding and clipping video, which is critical for the product.
 
