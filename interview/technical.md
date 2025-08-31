@@ -9,3 +9,7 @@ To guarantee schema-valid JSON, we used constrained decoding with a context-free
 ## Compensation expectation (≈ 20 seconds)
 
 What matters most is the scope of the problems I can solve and the caliber of the team.
+
+# Question
+## balance real data and simulated data
+I would like to know how you handle the balance between real data and simulated data?
