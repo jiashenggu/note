@@ -8,4 +8,4 @@ To guarantee schema-valid JSON, we used constrained decoding with a context-free
 
 ## Compensation expectation (≈ 20 seconds)
 
-What matters most is the scope of the problems I can solve and the caliber of the team around me.
+What matters most is the scope of the problems I can solve and the caliber of the team.
