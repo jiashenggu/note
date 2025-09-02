@@ -48,6 +48,9 @@ Of course. Since you are meeting with a senior leader, the conversation can easi
 Category 1: Deeper Technical Probing & Trade-offs
 These questions go beyond "what you did" to "why you did it that way" and test the depth of your understanding.
 
+# Category 1: Deeper Technical Probing & Trade-offs
+
+
 ## 1. On Distributed Training Nuances:
 
 ## Question: "You mentioned using Megatron-LM. Could you discuss the trade-offs between different parallelism strategies like data, tensor, and pipeline parallelism? In your 247B MoE model training, how did you likely combine these, and what was the main bottleneck you were trying to solve with that specific combination?"
@@ -75,6 +78,28 @@ Question: "This role is about optimizing the full stack. Can you describe a time
 How to Answer: This is a chance to show you don't just think about the model.
 
 "Yes, we frequently encountered situations where our GPUs were underutilized due to CPU-bound preprocessing. I identified this bottleneck using tools like Weights & Biases (wandb), which clearly visualized periods of GPU idle time. The solution was straightforward: we increased the number of CPU cores in the machine and adjusted the num_workers parameter of the dataloader. On another occasion, we pinpointed internet speed as the limiting factor—loading video files strained the available bandwidth. To resolve this, we pre-encoded the videos and migrated them to a storage drive with higher bandwidth capacity."
+
+# Category 2: Behavioral & Situational Questions
+
+
+## 1. Handling Ambiguity & Research Collaboration:
+
+Question: "Imagine a researcher gives you a novel model architecture in a messy, single-GPU script. It shows promise, but it's far from scalable. Walk me through your process as a Solutions Architect to take this from a research prototype to a robust, multi-node training pipeline. How do you handle disagreements about technical trade-offs with the researcher?"
+
+How to Answer: Show your process and collaboration skills.
+
+Process: "1. Understand & Profile: I'd first focus on understanding the core innovation. Then, I'd profile the code to identify the allocated memory and compute bottlenecks. 2. Modularize & Refactor: I'd work with the researcher to refactor the code into modular components (data loading, model definition, training loop). 3. Introduce Parallelism: Based on the profile, I'd introduce the appropriate parallelism strategy, starting with Data Parallelism and adding Tensor Parallelism if needed. 4. Scale & Test: We'd test on 2, then 4, then 16 nodes, validating that the convergence behavior matches the single-GPU baseline."
+
+Collaboration: "For disagreements, my approach is data-driven. For example, if a researcher prefers a custom operator that is slow, I would profile it against a standard, optimized one and present the performance data. The goal isn't to say 'no,' but to say 'Here's the performance cost of this approach. Can we work together to find a solution that preserves your research goal while also being scalable?'"
+
+## 2. Failure & Learning:
+
+Question: "Tell me about your most significant failure in a large-scale training project. What went wrong, what was the impact, and what did you learn from it that changed how you work today?"
+
+How to Answer: Be honest, take responsibility, and focus on the learning.
+
+"We had a continued pre-training run on a 20B token dataset that diverged halfway through. The loss suddenly went to NaN. The impact was a huge loss of time and compute budget. The root cause was incredibly subtle: a numerical instability in mixed-precision training triggered by a few corrupted data samples that our initial validation missed. The key learning was that for long-running jobs, monitoring is not enough; you need proactive anomaly detection and more robust data validation. Since then, I've implemented automated checks for loss divergence and built a much more rigorous data hashing and validation pipeline that runs before any large-scale job is launched."
+
 
 # Questions Should Ask
 ## balance real data and simulated data
