@@ -105,6 +105,10 @@ What matters most is the scope of the problems I can solve and the caliber of th
 
 I believe that scaling computing hardware is simpler than scaling robotic hardware.
 
+I believe robots still have significant room for development.
+
+
+
 # Questions Should Ask
 ## balance real data and simulated data
 "Regarding the data for GR00T, what is your team's current strategy on the balance between simulation data from Isaac and real-world demonstration data?"
