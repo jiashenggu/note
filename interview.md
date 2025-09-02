@@ -20,20 +20,27 @@ To guarantee schema-valid JSON, we used constrained decoding with a context-free
 
 ## Question: "What do you think of NVIDIA's approach with Isaac and Project GR00T?"
 
-Your Potential Answer: "I've been following it closely, and I think NVIDIA's full-stack strategy is precisely what the field needs. It's incredibly ambitious. You're not just building a model; you're building the entire ecosystem required for success. This includes the specialized compute hardware like the Jetson Thor, Isaac Sim platform for scalable training, and finally, the GR00T foundation model that ties it all together. This vertical integration allows for optimizations at every level. The concept of GR00T as a 'generalist blueprint' that understands multimodal instructions and can be fine-tuned for different embodiments is the most promising path towards scalable robotics, and it aligns perfectly with my own experience in building and adapting large foundation models."
+Your Potential Answer: "I've been following it closely, and I think NVIDIA's full-stack strategy is what the field needs. It's incredibly ambitious. You're not just building a model; you're building the entire ecosystem required for physical ai. This includes the specialized compute hardware like the Jetson Thor, Isaac Sim platform for scalable training, and finally, the GR00T foundation model that ties it all together. The concept of GR00T as a 'generalist foundation model' that understands multimodal instructions and can be fine-tuned for different embodiments is the most promising path towards scalable robotics."
 
 ## Question: "Our strategy is to provide the platform and tools like Isaac and GR00T to enable the entire robotics ecosystem. How does this compare to more vertically integrated approaches, like Tesla's Optimus? What are the pros and cons in your view?"
 
-"Tesla's vertical integration gives them tight control and the ability to optimize for a specific set of tasks within their own factories—a huge advantage for rapid, focused deployment. However, it's a closed garden. NVIDIA's platform strategy is fundamentally about enabling an entire market, much like Windows did for PCs or Android for mobile. The pro is massive scale and capturing a wider range of innovation from countless partners. The con is that it can be slower to get off the ground and requires managing a more complex ecosystem. I believe the platform approach will win in the long run because the diversity of real-world robotics applications is too vast for any single company to address alone."
+"Tesla's vertical integration gives them the ability to optimize for their own factories—a huge advantage for rapid, focused deployment. However, it's a closed garden. NVIDIA's platform strategy is fundamentally about enabling the entire market, much like Windows did for PC. The pro is massive scale and capturing a wider range of innovation from countless partners. The con is that it requires managing a more complex ecosystem. I believe the platform approach will win in the long run because the diversity of real-world robotics applications is too big for any single company to address."
 
 ## On Distributed Training Nuances: 
 ## Question: "You mentioned using Megatron-LM. Could you discuss the trade-offs between different parallelism strategies like data, tensor, and pipeline parallelism? In your 247B MoE model training, how did you likely combine these, and what was the main bottleneck you were trying to solve with that specific combination?"
 
-How to Answer:
+### 5 parallel
+Data Parallelism is a straightforward approach where we replicate the model across multiple GPUs, each processing a portion of the input data. It's great for scaling batch sizes, though it's constrained by the memory capacity of individual GPUs since each holds a full copy of the model.
 
-Define: Briefly explain each. Data Parallelism (simple, scales batch size, but memory per GPU is a limit). Tensor Parallelism (splits model weights, solves memory, but high communication overhead). Pipeline Parallelism (splits layers, helps with throughput, but can lead to idle 'bubbles').
+Tensor Parallelism addresses memory limits by splitting model weights across GPUs, with each handling a part of the tensor computations. This solves large model memory issues but introduces significant communication overhead between devices to synchronize partial results.
 
-Synthesize:  "For a large MoE model, you'd typically use Data Parallelism to distribute the experts across GPUs, as each input only routes to a few experts. For the very large, non-expert layers (like the attention blocks), you'd apply Tensor Parallelism to make them fit in memory. Pipeline Parallelism could be layered on top to keep the pipeline full. The main bottleneck we're solving is GPU memory capacity, followed by communication overhead." 
+Pipeline Parallelism divides the model into layers, assigning different layer segments to separate GPUs that process data in a sequential pipeline. It boosts throughput for long sequences but can create idle "bubbles" when GPUs wait for inputs from preceding layers.
+
+Expert Parallelism, often used with MoE (Mixture of Experts) models, distributes different expert sub-networks across GPUs. Each input activates only a subset of experts, enabling model scaling without full replication, though it requires smart routing and load balancing.
+
+Context Parallelism splits input sequences (like long texts) across GPUs, with each handling a segment of the context. It's particularly useful for processing extremely long sequences, allowing models to handle context lengths beyond what a single GPU's memory can accommodate.
+
+### EP vs TP in MoE：
 
 Computational efficiency: EP has an advantage in expert's computational efficiency, which reduces the number of kernel launches and increases the workload of each launch (without using the cutlass grouped gemm).
 
