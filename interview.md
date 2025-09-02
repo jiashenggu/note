@@ -2,9 +2,9 @@
 
 Hi, it's a pleasure to meet you. I'm Jiasheng Gu.
 
-At 01.AI, my work was focused on the entire lifecycle of VLMs and LLMs, including 25B-A3.5B and 247B-A22B MoE models. My process had two key stages. First, I handled the continued pre-training on a 20-billion-token domain-specific dataset, using the Megatron-LM framework. Second, I designed and implemented our alignment pipeline using both SFT and DPO. This was crucial for teaching the model the complex nuances of video understanding and intelligent clipping.
+At 01.AI, my work was focused on the entire lifecycle of VLMs and LLMs, including 25B-A3.5B and 247B-A22B MoE models. My process had two key stages. First, I handled the continued pre-training on a 20-billion-token domain-specific dataset, using the Megatron-LM framework. Second, I designed and implemented our alignment pipeline using SFT and DPO. This played a key role in teaching the model to improve the accuracy of video captions, increase the output density of LLMs, and support intelligent clipping.
 
-At Alibaba, my work was to establish a closed-loop system of "data selection -> training models-> evaluate models -> benchmark feedback.". Drives efficient model iteration by selecting high-value samples based on VLM scores. Besides, I enhanced and validated the model's ability to recognize knowledge entities by constructing high-quality training and validation datasets.
+At Alibaba, my work was to drive efficient model iteration by selecting high-value samples based on VLM scores, which is the critical step of a closed-loop system: "data selection -> training models -> evaluate models -> benchmark feedback." Besides, I enhanced and validated the model's ability to recognize knowledge entities, such as Burmese Cat and Jackie Chan, by constructing high-quality training and validation datasets.
 
 While I've greatly valued the growth of my previous roles, after researching the potential of physical AI and being inspired by NVIDIA's vision, I came to believe that physical AI is the essential next step of AI, and this conviction was a key driver in my decision to seek new opportunities. The reason I'm so excited about this role is that I see a direct bridge between my work and the challenges of this role. My experience in teaching models to perceive and reason through video can directly contribute to Project GR00T.
 
