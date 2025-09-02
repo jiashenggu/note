@@ -103,7 +103,7 @@ As a result, I implemented a versioning system. Before any training run, we run 
 
 What matters most is the scope of the problems I can solve and the caliber of the team.
 
-I believe that, in the short term, scaling up computing hardware is simpler than scaling up robotic hardware.
+I believe that scaling computing hardware is simpler than scaling robotic hardware.
 
 # Questions Should Ask
 ## balance real data and simulated data
