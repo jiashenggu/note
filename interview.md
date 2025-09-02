@@ -2,11 +2,15 @@
 
 Hi, it's a pleasure to meet you. I'm Jiasheng Gu.
 
-I'm an AI engineer specializing in building and optimizing large-scale multimodal foundation models. At 01.AI, my work was focused on the entire lifecycle of these models, from pre-training on massive datasets to fine-tuning them for specific, complex tasks.
+At 01.AI, my work was focused on the entire lifecycle of VLMs and LLMs, including 25B-A3.5B and 247B-A22B MoE models, from pre-training on massive datasets to fine-tuning them for specific, complex tasks.
 
 My process had two key stages. First, I handled the continued pre-training on a 20-billion-token domain-specific dataset, using the Megatron-LM framework. Second, I designed and implemented our alignment pipeline using both SFT and DPO. This was crucial for teaching the model the complex nuances of video understanding and intelligent clipping.
 
-While I've greatly valued the challenges and growth of my previous roles, after researching the potential of physical AI and being inspired by NVIDIA's vision, I came to believe that applying this technology to create physical AI is the essential next step, and this conviction was a key driver in my decision to seek new opportunities. The reason I'm so excited about this role is that I see a direct bridge between my work and the challenges of this role. My experience in teaching models to perceive and reason about the world through video can directly contribute to Project GR00T.
+At Alibaba, my work was to establish a closed-loop system of "data selection -> training -> evaluation -> feedback.". Drives efficient model iteration by intelligently selecting high-value samples based on VLM scores.
+
+Also, enhances and validates the model's ability to recognize knowledge entities by constructing high-quality datasets, supporting the visual understanding business units of Taobao and Quark.
+
+While I've greatly valued the growth of my previous roles, after researching the potential of physical AI and being inspired by NVIDIA's vision, I came to believe that physical AI is the essential next step, and this conviction was a key driver in my decision to seek new opportunities. The reason I'm so excited about this role is that I see a direct bridge between my work and the challenges of this role. My experience in teaching models to perceive and reason about the world through video can directly contribute to Project GR00T.
 
 ## Why DPO instead of PPO after SFT (≈ 30 seconds)
 
@@ -14,11 +18,9 @@ We chose DPO because it avoids the reward-hacking loop that often destabilizes P
 
 ## Structured JSON output from the VLM (≈ 30 seconds)
 
-To guarantee schema-valid JSON, we used constrained decoding with a context-free grammar compiled into a finite-state machine. At each token step we mask the logits so only legal continuations are possible. The overhead is about 1 millisecond, but the downstream parser never fails, which is critical for automatic video editing.
+To guarantee schema-valid JSON, we used constrained decoding with a context-free grammar compiled into a finite-state machine. At each token step we mask the logits so only legal tokens are possible. The overhead is about 1 millisecond, but the downstream parser never fails, which is critical for automatic video editing.
 
-## Compensation expectation (≈ 20 seconds)
 
-What matters most is the scope of the problems I can solve and the caliber of the team.
 
 ## Question: "What do you think of NVIDIA's approach with Isaac and Project GR00T?"
 
@@ -107,7 +109,9 @@ My key learning was that in a complex MLOps system, silent data corruption is fa
 
 As a result, I implemented a data validation and versioning system. Now, before any training run, we run a pre-flight check that uses content hashes and schema versions to ensure that all data artifacts—from the visual features to the text tokenizers—are perfectly compatible with the specific model checkpoint we are training. This has become a standard, mandatory step in our pipeline and has prevented this entire class of subtle, expensive bugs from recurring.
 
+## Compensation expectation (≈ 20 seconds)
 
+What matters most is the scope of the problems I can solve and the caliber of the team.
 
 # Questions Should Ask
 ## balance real data and simulated data
