@@ -2,7 +2,7 @@
 
 Hi, it's a pleasure to meet you. I'm Jiasheng Gu.
 
-At 01.AI, I was an engineer on a generative AI video product, building it from scratch. My main responsibility was the end-to-end training pipeline for our VLMs and LLMs, including 25-billion and 247-billion parameter MoE models.
+I'm an AI engineer specializing in building and optimizing large-scale multimodal foundation models. At 01.AI, my work was focused on the entire lifecycle of these models, from pre-training on massive datasets to fine-tuning them for specific, complex tasks.
 
 My process had two key stages. First, I handled the continued pre-training on a 20-billion-token domain-specific dataset, using the Megatron-LM framework. Second, I designed and implemented our alignment pipeline using both SFT and DPO. This was crucial for teaching the model the complex nuances of video understanding and intelligent clipping.
 
