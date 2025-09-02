@@ -26,7 +26,11 @@ Your Potential Answer: "I've been following it closely, and I think NVIDIA's ful
 
 "Tesla's vertical integration gives them the ability to optimize for their own factories—a huge advantage for rapid, focused deployment. However, it's a closed garden. NVIDIA's platform strategy is fundamentally about enabling the entire market, much like Windows did for PC. The pro is massive scale and capturing a wider range of innovation from countless partners. The con is that it requires managing a more complex ecosystem. I believe the platform approach will win in the long run because the diversity of real-world robotics applications is too big for any single company to address."
 
-## On Distributed Training Nuances: 
+
+# Category 1: Deeper Technical Probing & Trade-offs
+
+## 1. On Distributed Training Nuances:
+
 ## Question: "You mentioned using Megatron-LM. Could you discuss the trade-offs between different parallelism strategies like data, tensor, and pipeline parallelism? In your 247B MoE model training, how did you likely combine these, and what was the main bottleneck you were trying to solve with that specific combination?"
 
 ### 5 parallel
@@ -53,34 +57,17 @@ Of course. Since you are meeting with a senior leader, the conversation can easi
 Category 1: Deeper Technical Probing & Trade-offs
 These questions go beyond "what you did" to "why you did it that way" and test the depth of your understanding.
 
-# Category 1: Deeper Technical Probing & Trade-offs
-
-
-## 1. On Distributed Training Nuances:
-
-## Question: "You mentioned using Megatron-LM. Could you discuss the trade-offs between different parallelism strategies like data, tensor, and pipeline parallelism? In your 247B MoE model training, how did you likely combine these, and what was the main bottleneck you were trying to solve with that specific combination?"
-
-How to Answer:
-
-Define: Briefly explain each. Data Parallelism (simple, scales batch size, but memory per GPU is a limit). Tensor Parallelism (splits model weights, solves memory, but high communication overhead). Pipeline Parallelism (splits layers, helps with throughput, but can lead to idle 'bubbles').
-
-Synthesize: "For a large MoE model, Expert Parallelism is used to distribute the experts across GPUs, as each input only routes to a few experts. For the very large, non-expert layers (like the attention blocks), you'd apply Tensor Parallelism to make them fit in memory. Pipeline Parallelism could be layered on top to keep the pipeline full. The main bottleneck we're solving is GPU memory capacity, followed by communication overhead." 
-
 ## 2. On Data Quality & Challenges:
 
 ## Question: "You mentioned building a 'robust data quality loop' and a scoring model. Can you get more specific? What features did the scoring model use? And what was the most challenging or surprising data quality issue you encountered when training VLMs on video data?"
 
-How to Answer:
+The scoring model was a fine-tuned LLM that took a generated caption and a video script as input and predicted a quality score from 1-5. The score considered token number, semantic relevance and scripts' quality."
 
-Be Specific: "The scoring model was a fine-tuned LLM that took a generated caption and a video script as input and predicted a quality score from 1-5. Features included token number, object consistency (did the caption mention objects actually detected in the video?), and semantic relevance."
+The most surprising challenge was 'temporal hallucination.' The model would generate fluent descriptions of events that could logically happen next but didn't actually occur in the video clip. This forced us to create negative samples in our DPO training to penalize this behavior." 
 
-Share a Story: "The most surprising challenge was 'temporal hallucination.' The model would generate perfectly fluent descriptions of events that could logically happen next but didn't actually occur in the video clip. This forced us to create negative samples in our DPO training to penalize this behavior." 
-
-3. On Systems-Level Optimization:
+## 3. On Systems-Level Optimization:
 
 Question: "This role is about optimizing the full stack. Can you describe a time when a performance bottleneck wasn't in the model architecture itself, but in the data loading, CPU preprocessing, or network communication? How did you diagnose and solve it?"
-
-How to Answer: This is a chance to show you don't just think about the model.
 
 "Yes, we frequently encountered situations where our GPUs were underutilized due to CPU-bound preprocessing. I identified this bottleneck using tools like Weights & Biases (wandb), which clearly visualized periods of GPU idle time. The solution was straightforward: we increased the number of CPU cores in the machine and adjusted the num_workers parameter of the dataloader. On another occasion, we pinpointed internet speed as the limiting factor—loading video files strained the available bandwidth. To resolve this, we pre-encoded the videos and migrated them to a storage drive with higher bandwidth capacity."
 
@@ -91,9 +78,10 @@ How to Answer: This is a chance to show you don't just think about the model.
 
 Question: "Imagine a researcher gives you a novel model architecture in a messy, single-GPU script. It shows promise, but it's far from scalable. Walk me through your process as a Solutions Architect to take this from a research prototype to a robust, multi-node training pipeline. How do you handle disagreements about technical trade-offs with the researcher?"
 
-How to Answer: Show your process and collaboration skills.
-
-Process: "1. Understand & Profile: I'd first focus on understanding the core innovation. Then, I'd profile the code to identify the allocated memory and compute bottlenecks. 2. Modularize & Refactor: I'd work with the researcher to refactor the code into modular components (data loading, model definition, training loop). 3. Introduce Parallelism: Based on the profile, I'd introduce the appropriate parallelism strategy, starting with Data Parallelism and adding Tensor Parallelism if needed. 4. Scale & Test: We'd test on 2, then 4, then 16 nodes, validating that the convergence behavior matches the single-GPU baseline."
+1. Understand & Profile: I'd first focus on understanding the core innovation. Then, I'd profile the code to identify the allocated memory and compute bottlenecks.
+2. Modularize & Refactor: I'd work with the researcher to refactor the code into modular components (data loading, model definition, training loop). 
+3. Introduce Parallelism: Based on the profile, I'd introduce the appropriate parallelism strategy, starting with Data Parallelism and adding other Parallelisms if needed.
+4. Scale & Test: We'd test on 2, then 4, then 16 nodes, validating that the convergence behavior matches the single-GPU baseline."
 
 Collaboration: "For disagreements, my approach is data-driven. For example, if a researcher prefers a custom operator that is slow, I would profile it against a standard, optimized one and present the performance data. The goal isn't to say 'no,' but to say 'Here's the performance cost of this approach. Can we work together to find a solution that preserves your research goal while also being scalable?'"
 
@@ -101,16 +89,15 @@ Collaboration: "For disagreements, my approach is data-driven. For example, if a
 
 Question: "Tell me about your most significant failure in a large-scale training project. What went wrong, what was the impact, and what did you learn from it that changed how you work today?"
 
-My most significant failure was a silent data mismatch during the training of a Video-Language Model.
+My most significant failure was a silent data mismatch during the training of a VLM.
 
 What happened: We had a complex data preprocessing pipeline involving separate models for object detection and ASR. An upstream update to the object detection model changed its class label definitions. Our pipeline continued to run without errors, but it was feeding the VLM visual data that was inconsistent with the textual prompts being generated.
 
-Impact: The model didn't crash. The loss went down, and it seemed to be training. However, for about two weeks, we were chasing a "ghost" performance degradation in the model's visual reasoning abilities. We wasted significant time and GPU cycles on hyperparameter tuning and architectural tweaks, assuming the problem was with the VLM itself, not the data. The real impact was the misdirection of research effort.
+Impact: The model didn't crash. The loss went down, and it seemed to be training. However, for about two weeks, we were chasing a "ghost" performance degradation in the model's visual reasoning abilities. We wasted significant time and GPU cycles on hyperparameter tuning and architectural tweaks, assuming the problem was the VLM itself, not the data.
 
-What I learned & changed:
-My key learning was that in a complex MLOps system, silent data corruption is far more dangerous than a loud crash.
+My key learning was that in a complex DL system, silent data corruption is far more dangerous than a loud crash.
 
-As a result, I implemented a data validation and versioning system. Now, before any training run, we run a pre-flight check that uses content hashes and schema versions to ensure that all data artifacts—from the visual features to the text tokenizers—are perfectly compatible with the specific model checkpoint we are training. This has become a standard, mandatory step in our pipeline and has prevented this entire class of subtle, expensive bugs from recurring.
+As a result, I implemented a versioning system. Before any training run, we run a check that uses content versions to ensure that all data artifacts—from the visual features to the text tokenizers—are perfectly compatible with the specific model checkpoint we are training. This has become a standard step in our pipeline and has prevented those subtle, expensive bugs from recurring.
 
 ## Compensation expectation (≈ 20 seconds)
 
@@ -118,6 +105,9 @@ What matters most is the scope of the problems I can solve and the caliber of th
 
 # Questions Should Ask
 ## balance real data and simulated data
-I would like to know how you handle the balance between real data and simulated data?
+"Regarding the data for GR00T, what is your team's current strategy on the balance between simulation data from Isaac and real-world demonstration data?"
 
+"As you look to scale GR00T's capabilities, what do you foresee as the biggest challenge in the post-training alignment process?"
+
+"What would meeting expectations look like for someone in this role in their first 6 months?"
 
