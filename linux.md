@@ -1,8 +1,9 @@
 #### 终端实时看输出，同时日志文件也保存一份
 2>&1：把标准错误也一起重定向到标准输出  
 tee：把输出同时写入文件 和 显示在终端
+-a 参数告诉 tee 追加而不是覆盖。
 ```bash
-python your_script.py 2>&1 | tee output.log
+python your_script.py 2>&1 | tee -a output.log
 ```
 #### 总核数 = 物理CPU个数 X 每颗物理CPU的核数 
 #### 总逻辑CPU数 = 物理CPU个数 X 每颗物理CPU的核数 X 超线程数
