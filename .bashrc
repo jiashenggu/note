@@ -35,12 +35,10 @@ function 2gpu() {
     export CUDA_VISIBLE_DEVICES="$1"
 }
 
-export HOME=$input
 export HF_HOME=$HOME/.cache/huggingface
 export TMPDIR=$HOME/tmp
 export PIP_CACHE_DIR=$HOME/.cache/pip
 export CUDA_HOME=/usr/local/cuda-11.8
-[ -r ~/.volc/.profile ] && source ~/.volc/.profile #[volc installer]
 
  # export PATH="/usr/local/cuda-11.8/bin:$PATH"
  # export LD_LIBRARY_PATH="/usr/local/cuda-11.8/lib64:$LD_LIBRARY_PATH"
