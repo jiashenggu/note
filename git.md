@@ -5,7 +5,10 @@
 ------------------------------------------------
 1. 最简单：把原来的彩色 PS1 捡回来  
 先注释掉或删掉我那行纯文本的 `export PS1=...`，然后在 `~/.bashrc` 末尾加：
-
+```bash
+curl -Lo ~/.git-prompt.sh \
+  https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
+```
 ```bash
 # 保留系统原来的彩色提示符，只在末尾追加分支名
 source ~/.git-prompt.sh
