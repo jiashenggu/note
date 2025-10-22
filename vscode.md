@@ -7,6 +7,12 @@ Gitlens: Supercharge Git within VS Code
 
 Partial Diff: Compare (diff) text selections within a file, across files, or to the clipboard
 
+# 把默认后端改成 Tk
+```json
+            "env": {
+                "MPLBACKEND": "TkAgg"
+            }
+```
 # debug: 
 ```json
 {
