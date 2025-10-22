@@ -60,3 +60,6 @@ sudo dpkg -l | grep nvidia   # 再检查一遍，只剩 580 系列即可
 nvidia-smi
 ```
 不再报 “Driver/library version mismatch”，且版本号统一为 580.95.05（或你保留的那套），就说明冲突解决。
+
+# line-profiler
+[https://blog.csdn.net/weixin_43135178/article/details/117352757](https://blog.csdn.net/weixin_43135178/article/details/117352757)
