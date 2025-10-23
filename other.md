@@ -7,7 +7,7 @@ yarn install --forzen-lockfile
 yarn build
 ```
 
-开发web/libs/editor/src/代码，需要，yarn dev和yarn watch都开着
+If you need development, install yarn and follow web/README.md to complie frontend.
 
 # 机器里**同时**装了两个“主”metapackage：
 
