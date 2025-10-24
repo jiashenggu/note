@@ -1,4 +1,64 @@
-### show git branch in bash
+## 在 Ubuntu 下把 **Meld 配置成 Git 的默认 merge 工具**只需 3 步
+以后执行 `git merge` 出现冲突时，一条 `git mergetool` 就能弹出 Meld 的三向合并界面，边看图边点按钮解决冲突。
+
+---
+
+### 1. 安装 Meld（如已装可跳过）
+```bash
+sudo apt update
+sudo apt install meld
+```
+安装完确认路径  
+```bash
+which meld          # 应返回 /usr/bin/meld
+```
+
+---
+
+### 2. 一次性写入 Git 全局配置
+```bash
+git config --global merge.tool meld
+git config --global mergetool.meld.path /usr/bin/meld
+git config --global mergetool.meld.cmd \
+  'meld $LOCAL $BASE $REMOTE --output=$MERGED --auto-merge'
+```
+说明  
+- `$LOCAL`  当前分支版本  
+- `$BASE`   双方共同祖先  
+- `$REMOTE` 要合并进来的版本  
+- `$MERGED` 解决后保存的结果文件  
+- `--auto-merge` 让 Meld 先自动合并非冲突部分，你只处理剩余冲突 。
+
+---
+
+### 3. 正常使用流程
+```bash
+git merge feature-x        # 或 pull、cherry-pick 等
+# 若有冲突，执行：
+git mergetool
+```
+- Meld 会依次弹出每个冲突文件的三向面板。  
+- 你在界面里点箭头或手动改完，保存并关闭窗口 → Git 自动标记为“已解决”。  
+- 全部结束后  
+```bash
+git commit                 # 完成合并提交
+```
+
+---
+
+### 可选增强
+- 避免每次询问  
+```bash
+git config --global mergetool.prompt false
+```
+- 保留/丢弃 `.orig` 备份  
+```bash
+git config --global mergetool.keepBackup false
+```
+
+至此，Ubuntu 下 Git + Meld 可视化合并就配置好了，与 IDE 里图形化解决冲突的体验一致 。
+
+## show git branch in bash
 
 把颜色加回来即可，下面给出两种常用做法，你挑一条粘到 `~/.bashrc` 里（放在 `source ~/.git-prompt.sh` 之后）再 `source ~/.bashrc` 就好了。
 
