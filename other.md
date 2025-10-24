@@ -1,3 +1,28 @@
+# uv
+`--active` 就是告诉 uv：
+
+> **“别用项目目录下的 `.venv`，直接用当前 shell 里已经激活的那个虚拟环境。”**
+
+------------------------------------------------
+出现背景  
+- 你手动用 `uv venv test`（或 `python -m venv test`）建了一个环境并 `source test/bin/activate` 了。  
+- 此时 shell 的 `VIRTUAL_ENV` 指向 `.../test`，可项目根目录下还有默认的 `.venv`。  
+- 默认情况下 `uv sync` / `uv run` **永远只认 `.venv`**，于是出现  
+  “shell 在 test，uv 却往 .venv 里装” 的错位。
+
+------------------------------------------------
+加 `--active` 后  
+```bash
+uv sync --active      # 装到当前激活的 test
+uv run --active python script.py
+```
+uv 会**忽略 `.venv`**，把包装进你正在用的 `test`，同时把锁文件里对应的包一次性同步过去。
+
+------------------------------------------------
+一句话  
+`--active` = **“别自己挑目录，我让你装哪你就装哪”** ——也就是当前 shell 里已激活的那个虚拟环境。
+
+
 # label-studio
 https://github.com/HumanSignal/label-studio/issues/7202
 ```bash
