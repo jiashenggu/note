@@ -1,3 +1,120 @@
+## 让终端里**所有**输出都自动带上时间戳”的做法，按“改动范围”从小到大排列
+
+------------------------------------------------
+1. 只想让 **Python 代码里 print 带时间**  
+（最小侵入，老脚本不动，只要在最上方加 4 行）
+
+```python
+import builtins, datetime, functools
+_ts = functools.partial(datetime.datetime.now().strftime, '%F %T')
+builtins.print = lambda *a, **k: builtins.print(f"[{_ts()}]", *a, **k)
+
+# 之后任何 print(...) 都会变成：
+# [2025-10-24 14:38:07] hello world
+```
+
+------------------------------------------------
+2. 让 **当前 shell 会话里所有命令** 带时间  
+（对已有脚本、第三方命令都生效，无需改代码）
+
+bash / zsh  
+```bash
+# 临时生效，当前会话内
+export PROMPT_COMMAND='printf "[%(%F %T)T] ";'
+# 恢复：unset PROMPT_COMMAND
+```
+
+fish  
+```fish
+function fish_prompt
+    printf '[%s] ' (date '+%F %T')
+end
+```
+
+------------------------------------------------
+3. 永久生效——把 2 写进启动脚本  
+bash  
+```bash
+echo 'export PROMPT_COMMAND='"'"'printf "[%(%F %T)T] ";'"'"''  >> ~/.bashrc
+source ~/.bashrc
+```
+
+zsh  
+```bash
+echo 'export PROMPT_COMMAND='"'"'printf "[%(%F %T)T] ";'"'"''  >> ~/.zshrc
+source ~/.zshrc
+```
+
+fish  
+```fish
+echo 'function fish_prompt; printf "[%s] " (date "+%F %T"); end' >> ~/.config/fish/config.fish
+source ~/.config/fish/config.fish
+```
+
+效果  
+每敲一次回车，终端就会在**下一行开头**先打印时间戳，再显示命令输出；  
+如果命令自己产生多行输出，时间戳只出现在最前面一行——这已经能大致知道“什么时候跑完”。
+
+------------------------------------------------
+4. 想“**每一行输出**都带时间”——用 `ts`（moreutils）  
+安装  
+```bash
+# Ubuntu / Debian
+sudo apt install moreutils
+# macOS
+brew install moreutils
+```
+
+用法  
+```bash
+# 把任何命令管道给 ts，每行前面都会加时间
+$ ls -l | ts '%F %T'
+2025-10-24 14:38:10 total 24
+2025-10-24 14:38:10 -rw-rw-r-- 1 user user  215 Oct 24 14:30 a.py
+...
+
+# 如果希望“秒”级精度
+$ long_running_cmd | ts '%.s'
+1698146290.123456 Starting...
+1698146291.234567 Processing...
+```
+
+------------------------------------------------
+5. 在 **Python 里重定向 stdout / stderr**，让**所有**输出（包括第三方库）都带时间  
+```python
+import sys, datetime, functools
+ts = functools.partial(datetime.datetime.now().strftime, '%F %T')
+
+class TimestampedFile:
+    def __init__(self, raw):
+        self.raw = raw
+    def write(self, text):
+        for line in text.splitlines(True):          # 保留换行
+            self.raw.write(f'[{ts()}] {line}')
+    def flush(self):
+        self.raw.flush()
+
+sys.stdout = TimestampedFile(sys.stdout)
+sys.stderr = TimestampedFile(sys.stderr)
+
+# 之后所有 print、logging、子进程输出都会带时间
+```
+
+------------------------------------------------
+6. Windows PowerShell  
+```powershell
+# 当前会话
+function prompt { "[$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')] PS $PWD>" }
+
+# 永久
+# 把上面一行加到 $PROFILE 文件里
+```
+
+------------------------------------------------
+一句话总结  
+- **只改 Python**：用 1 或 5。  
+- **不改代码，只让 shell 会话带时间**：用 2 / 3。  
+- **要求“每行”都有时间戳**：用 4 的 `ts` 最干净。
 #### 终端实时看输出，同时日志文件也保存一份
 2>&1：把标准错误也一起重定向到标准输出  
 tee：把输出同时写入文件 和 显示在终端
