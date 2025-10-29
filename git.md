@@ -216,3 +216,22 @@ git push --set-upstream upstream dev
 ```bash
 GIT_SSH_COMMAND='ssh -i ~/.ssh/custom_id_rsa' git clone git@github.com:user/repo.git
 ```
+
+
+7315b-5c8cd
+25ab2-f9386
+01c35-c467c
+37a83-be5f6
+d5ff5-27dd9
+a07d5-c8814
+bbf2e-d980f
+67f20-cc013
+fca32-bb910
+1398e-09088
+a88a5-39a9f
+0b083-1ca35
+e895c-0082f
+7298e-02d48
+a8c2e-1e2a8
+967d3-4fb16
+github
