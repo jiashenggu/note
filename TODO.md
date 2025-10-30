@@ -3,7 +3,7 @@ DPM solver++
 
 ID/IP Identity-Preserving
 
-https://zhuanlan.zhihu.com/p/678613724
+[保持ID的人像生成技术介绍：IP-Adaptor,PhotoMaker,InstantID](https://zhuanlan.zhihu.com/p/678613724)
 
 PuLID
 
