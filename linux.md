@@ -1,3 +1,11 @@
+### wsl
+需要安装一些来接近真是linux系统
+WSL 官方已经把 headers 打包成 linux-headers-virtual
+```
+sudo apt update
+sudo apt install build-essential linux-headers-virtual python3-dev
+```
+
 ## ubuntu改任务栏
 https://blog.csdn.net/qq_36711448/article/details/134679319
 
