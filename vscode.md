@@ -1,3 +1,8 @@
+# ssh
+同一个ip的同一个端口重新链接需要：
+```
+ssh-keygen -f "/home/gear/.ssh/known_hosts" -R "[localhost]:8026"
+```
 # Plugins:
 Live server: Launch a development local Server with live reload feature for static & dynamic pages
 
