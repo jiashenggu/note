@@ -1,3 +1,11 @@
+## scp with regex
+```bash
+ssh myuser@remote.example.com 'ls -1 /var/log/app/*.log' | xargs -I {} scp myuser@remote.example.com:/var/log/app/{} .
+```
+```bash
+ls -1 ~/backups/*_backup.tar.gz | xargs -I {} scp {} myuser@remote.example.com:/mnt/backups/
+```
+
 ## 让终端里**所有**输出都自动带上时间戳”的做法，按“改动范围”从小到大排列
 
 ------------------------------------------------
