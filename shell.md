@@ -189,7 +189,7 @@ bindkey '^[[B' down-line-or-beginning-search
 
 ## scp with regex
 ```bash
-ssh myuser@remote.example.com 'ls -1 /var/log/app/*.log' | xargs -I {} scp myuser@remote.example.com:/var/log/app/{} .
+ssh myuser@remote.example.com 'ls -1 /var/log/app/*.log' | xargs -I@ scp myuser@remote.example.com:@ .
 ```
 ```bash
 ls -1 ~/backups/*_backup.tar.gz | xargs -I {} scp {} myuser@remote.example.com:/mnt/backups/
