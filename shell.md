@@ -1,3 +1,8 @@
+## rsync
+
+```bash
+rsync -avz --progress --partial -e "ssh -p 8026" A4_1210.zip root@localhost:/mnt/aws-lfs-02/shared/datasets/moz1/1210/A4_1210.zip
+```
 ## show git branch in bash
 
 把颜色加回来即可，下面给出两种常用做法，你挑一条粘到 `~/.bashrc` 里（放在 `source ~/.git-prompt.sh` 之后）再 `source ~/.bashrc` 就好了。
