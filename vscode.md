@@ -1,3 +1,30 @@
+## win11 ssh
+
+你需要创建一个 **SSH wrapper 脚本**，让 Cursor 通过这个脚本调用 WSL 的 SSH。
+
+### 方法：创建 Windows 批处理脚本
+
+1. 在 Windows 上创建文件 `C:\Users\scruple\wsl-ssh.bat`，内容：
+
+```batch
+@echo off
+C:\Windows\System32\wsl.exe ssh %*
+```
+
+2. 然后在 Cursor 设置中：
+
+```json
+{
+  "remote.SSH.path": "C:\\Users\\scruple\\wsl-ssh.bat"
+}
+```
+
+这样 Cursor 调用 `wsl-ssh.bat -T -D 63100 gb200 ...` 时，实际执行的是 `wsl.exe ssh -T -D 63100 gb200 ...`，就正确了！
+
+---
+
+## 同时打开多个分支
+
 在 VS Code 中，**一个窗口只能绑定一个 Git 分支**（即当前 `HEAD` 指向的分支）。  
 所以“同时打开多个分支”并不是指在一个窗口里同时 checkout 多个分支，而是指：
 
