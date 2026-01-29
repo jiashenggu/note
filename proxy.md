@@ -47,6 +47,31 @@ torch_command = os.environ.get('TORCH_COMMAND', "pip --proxy=你的代理地址 
  }
 }
 ```
+配置 Docker proxy：
+
+
+**步骤 1: 创建代理配置**
+```bash
+sudo mkdir -p /etc/systemd/system/docker.service.d
+sudo tee /etc/systemd/system/docker.service.d/proxy.conf << 'EOF'
+[Service]
+Environment="HTTP_PROXY=http://10.18.66.131:3128"
+Environment="HTTPS_PROXY=http://10.18.66.131:3128"
+Environment="NO_PROXY=localhost,127.0.0.1,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+EOF
+```
+
+**步骤 2: 重启 Docker**
+```bash
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+```
+
+**步骤 3: 重新构建**
+```bash
+cd /home/gear/Documents/workspace/code/label-studio
+bash quick_build_push.sh
+```
 
 # use os to set proxy
 ```python
